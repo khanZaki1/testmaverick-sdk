@@ -37,28 +37,28 @@
 <li> <a href="#overview">Overview</a> </li>
 <li> <a href="#authentication-and-security">Authentication and Security</a> </li>
 <li> 
-<a href="#revision-history">Auto Proctoring SDK</a> 
+<a href="#auto-proctoring-sdk">Auto Proctoring SDK</a> 
 <ol type="a">
-<li> <a href="#revision-history">Overview</a></li>
-<li> <a href="#revision-history">Sequence Diagram</a></li>
-<li> <a href="#revision-history">Getting Started</a></li>
-<li> <a href="#revision-history">Public Methods</a></li>
-<li> <a href="#revision-history">Events</a></li>
-<li> <a href="#revision-history">Integration of System Check</a></li>
-<li> <a href="#revision-history">Integration of Verification Steps</a></li>
+<li> <a href="#overview-1">Overview</a></li>
+<li> <a href="#sequence-diagram">Sequence Diagram</a></li>
+<li> <a href="#getting-started">Getting Started</a></li>
+<li> <a href="#public-methods">Public Methods</a></li>
+<li> <a href="#events">Events</a></li>
+<li> <a href="#integration-of-system-check">Integration of System Check</a></li>
+<li> <a href="#integration-of-verification-steps">Integration of Verification Steps</a></li>
 </ol>
 </li>
 <li> 
-<a href="#revision-history">Auto Proctoring Report SDK</a> 
+<a href="#auto-proctoring-report-sdk">Auto Proctoring Report SDK</a> 
 <ol type="a">
-<li> <a href="#revision-history">Overview</a></li>
-<li> <a href="#revision-history">Sequence Diagram</a></li>
-<li> <a href="#revision-history">Getting Started</a></li>
-<li> <a href="#revision-history">Public Methods</a></li>
-<li> <a href="#revision-history">Integration of Report SDK</a></li>
+<li> <a href="#overview-2">Overview</a></li>
+<li> <a href="#sequence-diagram-1">Sequence Diagram</a></li>
+<li> <a href="#getting-started-1">Getting Started</a></li>
+<li> <a href="#public-methods-1">Public Methods</a></li>
+<li> <a href="#integration-of-report-sdk">Integration of Report SDK</a></li>
 </ol>
 </li>
-<li> <a href="#revision-history">Error Handling</a> </li>
+<li> <a href="#error-handling">Error Handling</a> </li>
 <li> <a href="#revision-history">FAQs</a> </li>
 </ol>
 
@@ -392,6 +392,8 @@ window.Testmaverick.AutoProctoring.init(
 <li>This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.</li>
 </ul>
 <br />
+
+## Sequence Diagram
 <p align="center">
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
 </p>
