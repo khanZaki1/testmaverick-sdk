@@ -559,9 +559,13 @@ It will provide an error code with a descriptive message to handle the error acc
 #### mount()
 
 <p>The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.</p>
-<strong>Arguments :</strong> None <br />
-<strong>Return value :</strong> None <br />
-<strong>Example :</strong> None <br />
+<strong>Arguments :</strong> 
+
+`None`<br />
+<strong>Return value :</strong> 
+
+`None` <br />
+<strong>Example :</strong>
 
 ```javascript
  window.Testmaverick.AutoProctoring.mount();
