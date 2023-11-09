@@ -2,7 +2,7 @@
 <p align="center"><img src="images/logo.png" width="20%" /></p>
 <h1 align="center">TestMaverick SDk</h1>
 
-## Revision History
+# Revision History
 
 <table>
 <thead>
@@ -30,7 +30,7 @@
 </tr>
 </table>
 
-## Table of Content
+# Table of Content
 
 <ol>
 <li> <a href="#introduction">Introduction</a> </li>
@@ -62,7 +62,7 @@
 <li> <a href="#revision-history">FAQs</a> </li>
 </ol>
 
-## Introduction
+# Introduction
 
 <p>
 The TestMaverick SDK offers a cutting-edge solution for effortless integration of AI-based proctoring into your LMS platforms. 
@@ -91,7 +91,7 @@ TestMaverick SDK provides following features:
 
 <p>This document covers Auto Proctoring and Auto Proctoring Report SDK features.</p>
 
-## Overview
+# Overview
 
 <p>
 Below is a top level architectural overview for integration of TestMaverick SDK with Consumer’s existing system. The Consumer system will integrate TestMavericks client SDK which will communicate with the Consumer system for data through events trigger and callbacks. Also TestMaverick SDK provides various public methods which can be accessed by consumers.
@@ -105,7 +105,7 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
-## Authentication and Security
+# Authentication and Security
 
 <p>
 TestMaverick SDK provides a signature based authentication and authorization system to integrate with various existing applications to ensure the security of our APIs. 
@@ -117,13 +117,13 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 <ol>
 <li>
 
-### Registration and Configuration
+## Registration and Configuration
 <p>
 To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
 </li>
 <li>
 
-### Add Signature API
+## Add Signature API
 <ul>
 <li>
 <p>
@@ -251,7 +251,7 @@ public Class YourBusinesLogicClass {
 
 <li>
 
-### SDK initialization
+## SDK initialization
 <p>The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b></p>
 
 <table>
@@ -284,7 +284,7 @@ public Class YourBusinesLogicClass {
 </tr>
 </table>
 
-#### config parameter
+### config parameter
 <table>
 <thead>
 <tr>
@@ -383,9 +383,9 @@ window.Testmaverick.AutoProctoring.init(
 </li>
 </ol>
 
-## Auto Proctoring SDK
+# Auto Proctoring SDK
 
-### Overview
+## Overview
 
 <ul>
 <li>Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam. </li>
@@ -396,7 +396,7 @@ window.Testmaverick.AutoProctoring.init(
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
 </p>
 
-### Getting Started
+## Getting Started
 
 <p>Download the following files and add them to your public directory of your client application.</p>
 <table>
@@ -490,9 +490,9 @@ window.Testmaverick.AutoProctoring.init(
   </body>
 </html>
 ```
-### Public Methods
+## Public Methods
 
-#### init(initConfig, callbacks)
+### init(initConfig, callbacks)
 
 <ul>
 <li>The SDK will be initialized using the initConfig provided.</li>
@@ -530,7 +530,7 @@ initConfig : Object{
 <td>readyListener()</td>
 <td>True</td>
 <td>This listener will be triggered when the SDK has been successfully initialized.</td>
-<td align="center"> - </td>
+<td> - </td>
 </tr>
 
 <tr>
@@ -538,7 +538,7 @@ initConfig : Object{
 <td>True</td>
 <td>This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running. <br/>
 It will provide an error code with a descriptive message to handle the error accordingly.</td>
-<td align="center"> 
+<td> 
 
 `error` : `string`
  </td>
@@ -548,7 +548,7 @@ It will provide an error code with a descriptive message to handle the error acc
 <td>getUserDetails(List<userGUID>)</td>
 <td>True <b>if type is “verification-steps”</b></td>
 <td>This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email</td>
-<td align="center"> 
+<td> 
 
 `List<userGUID>` : `List<string>`
  </td>
@@ -556,7 +556,7 @@ It will provide an error code with a descriptive message to handle the error acc
 </tbody>
 </table>
 
-#### mount()
+### mount()
 
 <p>The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.</p>
 
@@ -570,4 +570,118 @@ It will provide an error code with a descriptive message to handle the error acc
 
 ```javascript
  window.Testmaverick.AutoProctoring.mount();
+```
+
+### unmountVerificationSteps()
+
+<p>This method will unmount all the UI components related to verification steps that were mounted in the DOM.</p>
+
+<b>Arguments :</b> 
+`None`<br/>
+
+<b>Return value :</b> 
+`None`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+ window.Testmaverick.AutoProctoring.unmountVerificationSteps();
+```
+
+### unmountProctorPlayer()
+
+<p>This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.</p>
+
+<b>Arguments :</b> 
+`None`<br/>
+
+<b>Return value :</b> 
+`None`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+ window.Testmaverick.AutoProctoring.unmountProctorPlayer();
+```
+
+### startAutoProctoring()
+
+<ul>
+<li>This method will start auto proctoring services.</li>
+<li>It will trigger the autoProctoringStarted event on successfully starting the auto proctoring.</li>
+</ul>
+
+<b>Arguments :</b> 
+`None`<br/>
+
+<b>Return value :</b> 
+`None`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+  window.TestMaverick.AutoProctoring.startAutoProctoring();
+```
+
+### stopAutoProctoring(submitTest)
+<ul>
+<li>This method will be used to stop auto proctoring..</li>
+<li>Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.</li>
+<li>Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.</li>
+</ul>
+
+<b>Arguments :</b> 
+`submitTest` : `Boolean` (Default : True)<br/>
+
+<b>Return value :</b> 
+`None`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+   window.Testmaverick.AutoProctoring.stopAutoProctoring(submitTest);
+```
+### toggleWebcamPreview()
+
+<p>This method will be used to open or close the webcam preview during the proctoring.</p>
+
+<b>Arguments :</b> 
+`None`<br/>
+
+<b>Return value :</b> 
+`None`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+  window.TestMaverick.AutoProctoring.toggleWebcamPreview();
+```
+
+### getErrorLogs()
+
+<p>This method will return a list of error logs that occurred during the functioning of SDK.</p>
+
+<b>Arguments :</b> 
+`None`<br/>
+
+<b>Return value :</b> 
+`List<Object>`<br/>
+
+<strong>Example :</strong>
+
+```javascript
+  let errorLogs = window.TestMaverick.AutoProctoring.getErrorLogs();
+ console.log(errorLogs);
+ /* 
+ OUTPUT
+ [
+ 	{
+    	name: “ValidationError”,
+    	code: 1202,
+    	stack : “ValidationError: Error in callback arguments. . .  ”,
+    	message : “Error in callback arguments.”
+ 	}
+ ]
+ */
+
 ```
