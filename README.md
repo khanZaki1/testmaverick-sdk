@@ -267,9 +267,9 @@ public Class YourBusinesLogicClass {
 <tr>
 <td>initConfig</td>
 <td>object</td>
-<td><a href="#configParameter">
+<td>
 
-`config` : `object`</a><br/>
+[`config` : `object`](#config-parameter)<br/>
 `authURL ` : `string`
 </td>
 </tr>
@@ -284,7 +284,7 @@ public Class YourBusinesLogicClass {
 </tr>
 </table>
 
-<h4 id="configParameter"><u>config parameter</u></h4>
+#### config parameter
 <table>
 <thead>
 <tr>
