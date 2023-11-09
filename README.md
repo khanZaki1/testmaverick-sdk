@@ -1028,7 +1028,7 @@ initConfig : Object{
 <tr>
 <th>Function name</th>
 <th>Required</th>
-<th style="width:20%">Description</th>
+<th>Description</th>
 <th>Parameter</th>
 <th>Parameter Example</th>
 <th>Return Value</th>
