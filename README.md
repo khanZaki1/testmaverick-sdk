@@ -382,3 +382,187 @@ window.Testmaverick.AutoProctoring.init(
 ```
 </li>
 </ol>
+
+## Auto Proctoring SDK
+
+### Overview
+
+<ul>
+<li>Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam. </li>
+<li>This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.</li>
+</ul>
+<br />
+<p align="center">
+<img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
+</p>
+
+### Getting Started
+
+<p>Download the following files and add them to your public directory of your client application.</p>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jsstore-worker.js</td>
+<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/worker/jsstore-worker.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/worker/jsstore-worker.js</a></td>
+</tr>
+<tr>
+<td>media-upload-worker.js</td>
+<td><a href="https://sandbox.testmaverick.com/v2023.11.1/tatic-resource/js/worker/media-upload-worker.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/tatic-resource/js/worker/media-upload-worker.js</a></td>
+</tr>
+<tr>
+<td>signalr.js</td>
+<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/signalr.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/signalr.js</a></td>
+</tr>
+<tr>
+<td>background-socket-service.js</td>
+<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/background-socket-service.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/background-socket-service.js</a></td>
+</tr>
+</tbody>
+</table>
+
+<br/>
+<p>Add below scripts in your index.html</p>
+
+```html
+<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"/>
+<script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"></script>
+```
+
+<p>Add div elements in your DOM with below shown identifiers:</p>
+
+<ol>
+<li>
+<b>For System Check</b>
+
+```html
+<div id=”system-check-steps-container”> </div>
+```
+</li>
+<li>
+<b>For Verification Steps and Auto Proctoring</b>
+
+```html
+<div :class="isVerificationSteps: '': 'display-none'" >
+    <div id="verification-steps-container"></div>
+</div>
+
+
+<div :class="!isVerificationSteps: '': 'display-none'">
+    <TestPlayer /> <!-- Put Your Testplayer code or component here  -->
+    <div id="auto-proctoring-container"></div>
+</div>
+```
+</li>
+</ol>
+
+<p>After adding these references your index.html file should look as below.</p>
+
+`index.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add SDK CSS BUNDLE FILE HERE -->
+    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
+    />
+    <!-- Add SDK JS BUNDLE FILE HERE -->
+    <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"
+    ></script>
+    <title>Auto Proctoring SDK Integration Example</title>
+  </head>
+
+  <body>
+     <div :class=’isVerificationSteps? “”: “display-none“’ >
+        <div id="verification-steps-container"></div>
+     </div>
+     <div :class=’!isVerificationSteps? “”: “display-none“’>
+        <TestPlayer /> <!-- Put Your Testplayer code or component here  -->
+        <div id="auto-proctoring-container"></div>
+     </div>
+  </body>
+</html>
+```
+### Public Methods
+
+#### init(initConfig, callbacks)
+
+<ul>
+<li>The SDK will be initialized using the initConfig provided.</li>
+<li>One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.</li>
+<li>The SDK's initialization configuration must contain an authURL.</li>
+</ul>
+
+<strong>Arguments:</strong>
+
+`1. initConfig`
+```typescript
+initConfig : Object{
+    config : Object {
+        testGUID : Integer (Required),
+        userGUID : Integer (Required),
+        attemptGUID : String (Required only if type is verification-steps),
+        type : String (Required) VALUE CAN BE ("system-check" , "verification-steps")
+    },
+    authURL : String (Required)
+}
+```
+
+`2. callbacks`
+<table>
+<thead>
+<tr>
+<th>Function name</th>
+<th>Required</th>
+<th>Description</th>
+<th>Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>readyListener()</td>
+<td>True</td>
+<td>This listener will be triggered when the SDK has been successfully initialized.</td>
+<td align="center"> - </td>
+</tr>
+
+<tr>
+<td>errorListener(error)</td>
+<td>True</td>
+<td>This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running. <br/>
+It will provide an error code with a descriptive message to handle the error accordingly.</td>
+<td align="center"> 
+
+`error` : `string`
+ </td>
+</tr>
+
+<tr>
+<td>getUserDetails(List<userGUID>)</td>
+<td>True <b>if type is “verification-steps”</b></td>
+<td>This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email</td>
+<td align="center"> 
+
+`List<userGUID>` : `List<string>`
+ </td>
+</tr>
+</tbody>
+</table>
+
+#### mount()
+
+<p>The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.</p>
+<strong>Arguments :</strong> None <br />
+<strong>Return value :</strong> None <br />
+<strong>Example :</strong> None <br />
+
+```javascript
+ window.Testmaverick.AutoProctoring.mount();
+```
