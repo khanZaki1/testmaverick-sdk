@@ -284,7 +284,7 @@ public Class YourBusinesLogicClass {
 </tr>
 </table>
 
-<h3 id="configParameter"><u>config parameter</u></h3>
+<h4 id="configParameter"><u>config parameter</u></h4>
 <table>
 <thead>
 <tr>
@@ -320,7 +320,7 @@ public Class YourBusinesLogicClass {
 </tbody>
 </table>
 
-<h3><u>callbacks descriptions</u></h3>
+<h4><u>callbacks descriptions</u></h4>
 <table>
 <thead>
 <tr>
