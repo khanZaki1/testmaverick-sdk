@@ -1,6 +1,6 @@
 
 <p align="center"><img src="images/logo.png" width="20%" /></p>
-<h1 align="center">TestMaverick SDk</h1>
+<h1 align="center">TestMaverick SDK</h1>
 
 # Revision History
 
@@ -30,7 +30,7 @@
 </tr>
 </table>
 
-# Table of Content
+# Table of Contents
 
 <ol>
 <li> <a href="#introduction">Introduction</a> </li>
