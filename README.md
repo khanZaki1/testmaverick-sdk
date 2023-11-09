@@ -117,13 +117,13 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 <ol>
 <li>
 
-## Registration and Configuration
+### Registration and Configuration
 <p>
 To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
 </li>
 <li>
 
-## Add Signature API
+### Add Signature API
 <ul>
 <li>
 <p>
@@ -251,7 +251,7 @@ public Class YourBusinesLogicClass {
 
 <li>
 
-## SDK initialization
+### SDK initialization
 <p>The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b></p>
 
 <table>
