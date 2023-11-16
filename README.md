@@ -82,7 +82,7 @@ TestMaverick SDK provides following features:
 
 <ul>
 <li>Auto Proctoring</li>
-<li>Proctoring Report</li>
+<li>Auto Proctoring Report</li>
 <li>Manual Proctoring</li>
 <li>Test player</li>
 <li>Smart Test evaluation using ChatGPT</li>
@@ -94,11 +94,15 @@ TestMaverick SDK provides following features:
 # Overview
 
 <p>
-Below is a top level architectural overview for integration of TestMaverick SDK with Consumer’s existing system. The Consumer system will integrate TestMavericks client SDK which will communicate with the Consumer system for data through events trigger and callbacks. Also TestMaverick SDK provides various public methods which can be accessed by consumers.
+Below is a top level architectural overview of TestMaverick SDK integration with Consumer’s existing system. 
 </p>
 
 <p>
-The TestMaverick SDK will store all the Proctoring related information on TestMaverick Server however it will not  store any PII or sensitive information of the user on our server. TestMaverick  SDK solely store statistical data related to auto proctoring (i.e Face, audio and browser related violation counts) along with few non-identifiable GUIDs like UserGUID, TestGUID and AttemptGUID, ensuring that no personal information is stored on our end. These identifiers, which are not directly linked to personal information, are essential for keeping the data mapping within the TestMaverick system so that when the TestMaverick Report SDK is loaded in your system, using these non-identifiable GUIDs it will accurately retrieve statistical information mapped to it from TestMaverick server.
+The TestMaverick Client SDK will be integrated into the Consumer system, allowing it to communicate with the system for data through callbacks and event triggers. Additionally, TestMaverick SDK provides a list of publicly accessible methods that can be invoked by the consumers.
+</p>
+
+<p>
+The TestMaverick SDK will store all the Proctoring related information on TestMaverick Server however it will not  store any PII or sensitive information of the user on our server. TestMaverick SDK solely store statistical data related to auto proctoring (i.e Face, audio and browser related violation counts) along with few non-identifiable GUIDs like userGUID, testGUID and attemptGUID, ensuring that no personal information is stored on our end. These identifiers, which are not directly linked to personal information, are essential for keeping the data mapping within the TestMaverick system so that when the TestMaverick Report SDK is loaded in your system, using these non-identifiable GUIDs it will accurately retrieve statistical information mapped to it from our TestMaverick server.
 </p>
 
 <p align="center">
