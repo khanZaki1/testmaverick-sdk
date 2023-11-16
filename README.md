@@ -65,7 +65,7 @@
 ## Introduction
 
 <p>
-The TestMaverick SDK offers a cutting-edge solution for effortless integration of AI-based proctoring into your LMS platforms. 
+The TestMaverick SDK offers a cutting-edge solution for effortless integration of AI-based proctoring into your web applications. 
 </p>
 
 <p>
@@ -119,9 +119,13 @@ TestMaverick SDK provides a signature based authentication and authorization sys
 
 ### Steps to integrate Testmaverick SDK in Consumer's existing system.
 #### 1. Registration and Configuration
-* <p>To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
-
-
+* Consumers need to register with TestMaverick's service to obtain a ConsumerKey and a SecretKey.
+* These keys are essential for authenticating and authorizing requests made to TestMaverick's API using the SDK.
+* Consumers must keep the ConsumerKey and SecretKey confidential. These keys are sensitive information and should not be shared publicly.
+* Consumers are required to provide their domain details where they plan to integrate the SDK.
+* TestMaverick's vendor will whitelist these domains to allow SDK access from those specific domains.
+* This step is a security measure to control which domains are authorized to use the SDK.
+* After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
 
 #### 2. Add Signature API
 * Consumers must provide an API which can generate the signed object in the following output format.<br/>
@@ -303,7 +307,8 @@ window.Testmaverick.AutoProctoring.init(
     initConfig ,
     {
        readyListener,
-       errorListener
+       errorListener,
+       getUserDetails
     }
 )
 ```
@@ -417,217 +422,207 @@ window.Testmaverick.AutoProctoring.init(
 ## Public Methods
 
 ### init(initConfig, callbacks)
-
-<ul>
-<li>The SDK will be initialized using the initConfig provided.</li>
-<li>One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.</li>
-<li>The SDK's initialization configuration must contain an authURL.</li>
-</ul>
+> * The SDK will be initialized using the initConfig provided.
+> * One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
+> * The SDK's initialization configuration must contain an authURL.
 
 <strong>Arguments:</strong>
-
-`1. initConfig`
-```typescript
-initConfig : Object{
-    config : Object {
-        testGUID : Integer (Required),
-        userGUID : Integer (Required),
-        attemptGUID : String (Required only if type is verification-steps),
-        type : String (Required) VALUE CAN BE ("system-check" , "verification-steps")
-    },
-    authURL : String (Required)
-}
-```
-
-`2. callbacks`
 <table>
 <thead>
 <tr>
-<th>Function name</th>
-<th>Required</th>
-<th>Description</th>
-<th>Parameter</th>
-<th>Parameter Example</th>
-<th>Return Value</th>
+<th>input parameters</th>
+<th>type</th>
+<th>schema</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>readyListener()</td>
-<td>True</td>
-<td>This listener will be triggered when the SDK has been successfully initialized.</td>
-<td> - </td>
-<td> - </td>
-<td> - </td>
-</tr>
-
-<tr>
-<td>errorListener(error)</td>
-<td>True</td>
-<td>This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running. <br/>
-It will provide an error code with a descriptive message to handle the error accordingly.</td>
-<td> 
-
-`error` : `string`
- </td>
- <td> - </td>
-<td> - </td>
-</tr>
-
-<tr>
-<td>getUserDetails(List<userGUID>)</td>
-<td>True <b>if type is “verification-steps”</b></td>
-<td>This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email</td>
-<td> 
-
-`List<userGUID>` : `List<string>`
- </td>
- <td>
-
- ```javascript
- [
-    "99a6bb35-b740-4021-b2b4-d712901bf91b"
-]
-
- ```
- </td>
- <td>
-
- ```json
- [
-    {
-       "userGUID" :   "99a6bb35-b740-4021-b2b4-d712901bf91b",
-       "firstName" : "John",
-       "lastName" : "Doe",
-       "email" : "johndoe@gmail.com"
-    }
-]
-
-
- ```
- </td>
-</tr>
 </tbody>
+<tr>
+<td>initConfig</td>
+<td>object</td>
+<td>
+
+```
+{
+    {
+        attemptGUID: `string`,
+        userGUID: `string`,
+        testGUID: `string`,
+        type : `string`
+    },
+    `authURL ` : `string`
+}
+```
+</td>
+</tr>
+<tr>
+<td>callbacks </td>
+<td>object</td>
+<td>
+
+```
+{
+    readyListener: function,
+    errorListener: function,
+    getUserDetails: function,
+}
+```
+</td>
+</tr>
 </table>
 
+<strong>Callback methods:</strong>
+1. `readyListener`
+   - required: true
+   - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
+
+2. `errorListener(error)`
+   - required: true
+   - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
+   - It will provide an error code with a descriptive message to handle the error accordingly.
+  
+3. `getUserDetails(List<userGUID>)`
+    - required : true if type is “verification-steps”
+    - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email 
+
+---
+
 ### mount()
+> * The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
 
-<p>The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.</p>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`None`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
  window.Testmaverick.AutoProctoring.mount();
 ```
+---
 
 ### unmountVerificationSteps()
+> * this method will unmount all the UI components related to verification steps that were mounted in the DOM.
 
-<p>This method will unmount all the UI components related to verification steps that were mounted in the DOM.</p>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`None`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
  window.Testmaverick.AutoProctoring.unmountVerificationSteps();
 ```
-
+---
 ### unmountProctorPlayer()
+> * This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.
 
-<p>This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.</p>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`None`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
  window.Testmaverick.AutoProctoring.unmountProctorPlayer();
 ```
+---
 
 ### startAutoProctoring()
+> * This method will start auto proctoring services.
+> * it will trigger the autoProctoringStarted event on successfully starting the auto proctoring.
 
-<ul>
-<li>This method will start auto proctoring services.</li>
-<li>It will trigger the autoProctoringStarted event on successfully starting the auto proctoring.</li>
-</ul>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`None`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
-  window.TestMaverick.AutoProctoring.startAutoProctoring();
+ window.TestMaverick.AutoProctoring.startAutoProctoring();
 ```
+---
 
 ### stopAutoProctoring(submitTest)
-<ul>
-<li>This method will be used to stop auto proctoring..</li>
-<li>Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.</li>
-<li>Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.</li>
-</ul>
+> * This method will be used to stop auto proctoring. 
+> * Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.
+> * Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.
 
-<b>Arguments :</b> 
-`submitTest` : `Boolean` (Default : True)<br/>
+<strong>Arguments:</strong> 
 
-<b>Return value :</b> 
-`None`<br/>
+<table>
+<thead>
+<tr>
+<th>input parameters</th>
+<th>type</th>
+<th>schema</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+<tr>
+<td>submitTest</td>
+<td>Boolean</td>
+<td>
 
+```
+true | false
+```
+</td>
+</tr>
+</table>
+
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
-   window.Testmaverick.AutoProctoring.stopAutoProctoring(submitTest);
+ window.Testmaverick.AutoProctoring.stopAutoProctoring(submitTest);
 ```
+---
+
 ### toggleWebcamPreview()
+> * This method will be used to open or close the webcam preview during the proctoring.
 
-<p>This method will be used to open or close the webcam preview during the proctoring.</p>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`None`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
 <strong>Example :</strong>
 
 ```javascript
-  window.TestMaverick.AutoProctoring.toggleWebcamPreview();
+ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 ```
+---
 
 ### getErrorLogs()
+> * This method will return a list of error logs that occurred during the functioning of SDK.
 
-<p>This method will return a list of error logs that occurred during the functioning of SDK.</p>
-
-<b>Arguments :</b> 
-`None`<br/>
-
-<b>Return value :</b> 
-`List<Object>`<br/>
-
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `List<object>`
+    
 <strong>Example :</strong>
 
 ```javascript
-  let errorLogs = window.TestMaverick.AutoProctoring.getErrorLogs();
+ window.TestMaverick.AutoProctoring.getErrorLogs();
+
  console.log(errorLogs);
- /* 
- OUTPUT
+ /*
  [
  	{
     	name: “ValidationError”,
@@ -638,6 +633,7 @@ It will provide an error code with a descriptive message to handle the error acc
  ]
  */
 ```
+------
 
 ## Events
 
