@@ -419,9 +419,9 @@ window.Testmaverick.AutoProctoring.init(
   </body>
 </html>
 ```
-## Public Methods
+### Public Methods
 
-### init(initConfig, callbacks)
+#### init(initConfig, callbacks)
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
@@ -487,7 +487,7 @@ window.Testmaverick.AutoProctoring.init(
 
 ---
 
-### mount()
+#### mount()
 > The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
 
 <strong>Arguments:</strong> `None`
@@ -503,7 +503,7 @@ window.Testmaverick.AutoProctoring.init(
 ```
 ---
 
-### unmountVerificationSteps()
+#### unmountVerificationSteps()
 > this method will unmount all the UI components related to verification steps that were mounted in the DOM.
 
 <strong>Arguments:</strong> `None`
@@ -518,7 +518,7 @@ window.Testmaverick.AutoProctoring.init(
  window.Testmaverick.AutoProctoring.unmountVerificationSteps();
 ```
 ---
-### unmountProctorPlayer()
+#### unmountProctorPlayer()
 > This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.
 
 <strong>Arguments:</strong> `None`
@@ -534,7 +534,7 @@ window.Testmaverick.AutoProctoring.init(
 ```
 ---
 
-### startAutoProctoring()
+#### startAutoProctoring()
 > This method will start auto proctoring services.
 > it will trigger the autoProctoringStarted event on successfully starting the auto proctoring.
 
@@ -551,7 +551,7 @@ window.Testmaverick.AutoProctoring.init(
 ```
 ---
 
-### stopAutoProctoring(submitTest)
+#### stopAutoProctoring(submitTest)
 > This method will be used to stop auto proctoring. 
 > Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.
 > Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.
@@ -591,7 +591,7 @@ true | false
 ```
 ---
 
-### toggleWebcamPreview()
+#### toggleWebcamPreview()
 > This method will be used to open or close the webcam preview during the proctoring.
 
 <strong>Arguments:</strong> `None`
@@ -607,7 +607,7 @@ true | false
 ```
 ---
 
-### getErrorLogs()
+#### getErrorLogs()
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
@@ -904,9 +904,9 @@ After adding these references your index.html file should look as below.
 </html>
 ```
 ---
-## Public methods
+### Public methods
 
-### init(initConfig, callbacks)
+#### init(initConfig, callbacks)
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
@@ -932,7 +932,7 @@ After adding these references your index.html file should look as below.
     {
         testGUID: String,
         startTestDate: String, (MM/DD/YYYY)
-	    endTestDate: String, (MM/DD/YYYY),
+        endTestDate: String, (MM/DD/YYYY),
         startTestTime: String, (12/24 hour format)
         endTestTime: String, (12/24 hour format)
         testName: String,
@@ -990,7 +990,7 @@ After adding these references your index.html file should look as below.
 
 ---
 
-### mount()
+#### mount()
 > The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
 
 <strong>Arguments:</strong> `None`
@@ -1005,7 +1005,7 @@ After adding these references your index.html file should look as below.
  window.TestMaverick.AutoProctoringReport.mount();
 ```
 ---
-### getErrorLogs()
+#### getErrorLogs()
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
@@ -1032,11 +1032,9 @@ After adding these references your index.html file should look as below.
 ```
 ------
 
-## Integration of Report SDK
+### Integration of Report SDK
 
-<ol>
-
-### <li>Initialize the SDK</li>
+#### 1. Initialize the SDK
 ```javascript
   function readyListener(){
     subscribeToEvents();
@@ -1100,7 +1098,7 @@ After adding these references your index.html file should look as below.
 
 ```
 
-### 2. Mount ReportSDK component
+#### 2. Mount ReportSDK component
 
 In order to mount the report UI components, there must be an element with the below mentioned identifier present in the DOM.
 
