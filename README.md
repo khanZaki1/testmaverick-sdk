@@ -2,7 +2,7 @@
 <p align="center"><img src="images/logo.png" width="20%" /></p>
 <h1 align="center">TestMaverick SDK</h1>
 
-# Revision History
+## Revision History
 
 <table>
 <thead>
@@ -30,7 +30,7 @@
 </tr>
 </table>
 
-# Table of Contents
+## Table of Contents
 
 <ol>
 <li> <a href="#introduction">Introduction</a> </li>
@@ -62,7 +62,7 @@
 <li> <a href="#revision-history">FAQs</a> </li>
 </ol>
 
-# Introduction
+## Introduction
 
 <p>
 The TestMaverick SDK offers a cutting-edge solution for effortless integration of AI-based proctoring into your LMS platforms. 
@@ -91,7 +91,7 @@ TestMaverick SDK provides following features:
 
 <p>This document covers Auto Proctoring and Auto Proctoring Report SDK features.</p>
 
-# Overview
+## Overview
 
 <p>
 Below is a top level architectural overview of TestMaverick SDK integration with Consumer’s existing system. 
@@ -109,23 +109,21 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
-<hr/>
+------
 
-# Authentication and Security
+## Authentication and Security
 
 <p>
 TestMaverick SDK provides a signature based authentication and authorization system to integrate with various existing applications to ensure the security of our APIs. 
 </p>
-<p>
-Following are the steps to be followed by Consumer to integrate SDK with the existing system.
-</p>
 
-### 1. Registration and Configuration
+### Steps to integrate Testmaverick SDK in Consumer's existing system.
+#### 1. Registration and Configuration
 * <p>To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
 
 
 
-### 2. Add Signature API
+#### 2. Add Signature API
 * Consumers must provide an API which can generate the signed object in the following output format.<br/>
 
 ```json
@@ -233,7 +231,7 @@ public Class YourBusinesLogicClass {
 ```
 * Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
 
-### 3. SDK initialization
+#### 3. SDK initialization
 * The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b>
 
 <table>
@@ -309,17 +307,13 @@ window.Testmaverick.AutoProctoring.init(
     }
 )
 ```
+------
 
-<hr/>
-# Auto Proctoring SDK
+## Auto Proctoring SDK
 
-## Overview
-
-<ul>
-<li>Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam. </li>
-<li>This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.</li>
-</ul>
-<br />
+### Overview
+* Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam.
+* This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.
 
 ## Sequence Diagram
 <p align="center">
@@ -332,7 +326,7 @@ window.Testmaverick.AutoProctoring.init(
 <table>
 <thead>
 <tr>
-<th>Description</th>
+<th>Script files</th>
 <th>URL</th>
 </tr>
 </thead>
