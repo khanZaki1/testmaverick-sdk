@@ -1038,44 +1038,53 @@ After adding these references your index.html file should look as below.
 
 ### <li>Initialize the SDK</li>
 ```javascript
-function readyListener(){
+  function readyListener(){
     subscribeToEvents();
   }
+
   function errorListener(error){
     console.log(error);
   }
-  function getFilteredUsers(filter) { //filter = {
-    					"searchKeyword": "anything",
-    					"sortBy": true,
-    					"pageNo": 0,
-   					"perPageRowCount": 20,
-    					"oldperPageRowCount": -1,
-    					"testGUID": “abcd”
-  				}
 
+  /*
+     filter = {
+    		"searchKeyword": "anything",
+    		"sortBy": true,
+    		"pageNo": 0,
+   		"perPageRowCount": 20,
+    		"oldperPageRowCount": -1,
+    		"testGUID": “abcd”
+	}
+  */
 
+  function getFilteredUsers(filter) { 
       const userData = // fetch data based on filter
       return userData
   }
+
   function getUserDetails(List<userGUID>) {
       let userDetails= [];
       return userDetails
   }
+
   const initConfig = {
       config : {
            currentUserGUID: “b96c5038-ecb5-11ec-9b97-0a264b1a6b74”,
            testDetailsList:[
- 	  {
-          testGUID: "293a30c8-59de-477c-8fc6-2d34b893cd25",
-          startTestDate: "10/20/2023",
-          EndTestDate: "10/29/2023",
-          startTestTime: "09:11 am",
-          EndTestTime: "2:30 pm",
-          testName: "Zeus Recruitment Test",
-          testDuration: 300,
-        }],
-       authURL : “<Consumer’s signed request web API url>”
+ 	     {
+	          testGUID: "293a30c8-59de-477c-8fc6-2d34b893cd25",
+	          startTestDate: "10/20/2023",
+	          EndTestDate: "10/29/2023",
+	          startTestTime: "09:11 am",
+	          EndTestTime: "2:30 pm",
+	          testName: "Zeus Recruitment Test",
+	          testDuration: 300,
+             }
+          ]
+      },
+      authURL : “<Consumer’s signed request web API url>”
   }
+
   // initialize the SDK using above config
   function initializeSDK(){
     window.TestMaverick.AutoProctoringReport.init(
