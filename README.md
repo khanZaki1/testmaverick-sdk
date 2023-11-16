@@ -109,6 +109,8 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
+<hr/>
+
 # Authentication and Security
 
 <p>
@@ -118,21 +120,13 @@ TestMaverick SDK provides a signature based authentication and authorization sys
 Following are the steps to be followed by Consumer to integrate SDK with the existing system.
 </p>
 
-<ol>
-<li>
+### 1. Registration and Configuration
+* <p>To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
 
-## Registration and Configuration
-<p>
-To use the TestMaverick SDK, consumers must register with our service. Upon registering, they will receive a 'ClientID' and a 'Secret Key'. This set of secret keys needs to be kept confidential.</p>
-</li>
-<li>
 
-## Add Signature API
-<ul>
-<li>
-<p>
-Consumers must provide an API which can generate the signed object in the following output format.<br/>
-</p>
+
+### 2. Add Signature API
+* Consumers must provide an API which can generate the signed object in the following output format.<br/>
 
 ```json
     {
@@ -160,12 +154,11 @@ Consumers must provide an API which can generate the signed object in the follow
         }
     }
 ```
-</li>
-<li>To create the above signed object, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor. </li>
-<li>For .Net core applications following changes can be done to create an API for signed requests.</li>
 
-<li>
-<p>Consumer should add reference of dll to their project<br/></p>
+* To create the above signed object, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
+* For .Net core applications following changes can be done to create an API for signed requests.
+
+* <p>Consumer should add reference of dll to their project<br/></p>
 
 ```javascript
 <ItemGroup>
@@ -174,16 +167,12 @@ Consumers must provide an API which can generate the signed object in the follow
   </Reference>
 </ItemGroup>
 ```
-</li>
 
-<li>
-<p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL will be provided in the config while initializing the SDK. The definition of the Signature API is given below for your reference.
-</p>
-<ul type="square">
-<li>Type : POST</li>
-<li>Request Param : [FromBody] object config</li>
-<li>
-<p>Sample Code: <br/></p>
+* <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL will be provided in the config while initializing the SDK. The definition of the Signature API is given below for your reference.
+
+    - Type : POST
+    - Request Param : [FromBody] object config
+    - <p>Sample Code: <br/></p>
 
 ```c#
 public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] object config)
@@ -205,12 +194,8 @@ public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] object conf
             return contentResult;
         }
 ```
-</li>
-</ul>
-</li>
 
-<li>
-<p>To create a signed request object use the following method provided with dll. <br/></p>
+* To create a signed request object use the following method provided with dll.
 
 ```c#
 public Class YourBusinesLogicClass {
@@ -246,24 +231,17 @@ public Class YourBusinesLogicClass {
      ...
 }
 ```
-</li>
-<li>
-    Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
-</li>
-</ul>
-</li>
+* Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
 
-<li>
-
-## SDK initialization
-<p>The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b></p>
+### 3. SDK initialization
+* The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b>
 
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>input parameters</th>
 <th>type</th>
-<th>value</th>
+<th>schema</th>
 </tr>
 </thead>
 <tbody>
@@ -273,8 +251,17 @@ public Class YourBusinesLogicClass {
 <td>object</td>
 <td>
 
-[`config` : `object`](#config-parameter)<br/>
-`authURL ` : `string`
+```
+{
+    {
+        attemptGUID: `string`,
+        userGUID: `string`,
+        testGUID: `string`,
+        type : `string`
+    },
+    `authURL ` : `string`
+}
+```
 </td>
 </tr>
 <tr>
@@ -282,76 +269,14 @@ public Class YourBusinesLogicClass {
 <td>object</td>
 <td>
 
-`readyListener()` : `function` <br/>
-`errorListener(error) ` : `function`
+```
+{
+    readyListener: function,
+    errorListener: function
+}
+```
 </td>
 </tr>
-</table>
-
-### config parameter
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>attemptGUID </td>
-<td>
-
-`string`</td>
-</tr>
-<tr>
-<td>userGUID  </td>
-<td>
-
-`string`</td>
-</tr>
-<tr>
-<td>testGUID  </td>
-<td>
-
-`string`</td>
-</tr>
-<tr>
-<td>type  </td>
-<td>
-
-`string`</td>
-</tr>
-</tbody>
-</table>
-
-<h4><u>callbacks descriptions</u></h4>
-<table>
-<thead>
-<tr>
-<th>Function name</th>
-<th>Description</th>
-<th>Parameter</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>readyListener()</td>
-<td>This listener will be triggered when the SDK has been successfully initialized.</td>
-<td align="center"> - </td>
-</tr>
-<tr>
-<td>errorListener(error)</td>
-<td>
-This listener will be triggered whenever there is any error while initializing the SDK or at any point when the SDK is running. <br/>
- It will provide an error object that contains error code, error message, error stack trace and other useful information for debugging.
-
-</td>
-<td align="center"> 
-
-`error` : `string`
- </td>
-</tr>
-</tbody>
 </table>
 
 <strong>Sample code :</strong>
@@ -367,12 +292,12 @@ const initConfig  = {
    authURL : “<consumers signed request web API URL>”
  }
 
-const readyListener = () => {
-    // DO SOMETHING
+const readyListener = function() {
+    // sdk is initalized
 }
 
-const errorListener = (error) => {
-    // DO SOMETHING
+const errorListener = function(error) {
+    // perform error handling here
 }
 
 // initialize the SDK using above config
@@ -384,9 +309,8 @@ window.Testmaverick.AutoProctoring.init(
     }
 )
 ```
-</li>
-</ol>
 
+<hr/>
 # Auto Proctoring SDK
 
 ## Overview
