@@ -58,6 +58,16 @@
 <li> <a href="#integration-of-report-sdk">Integration of Report SDK</a></li>
 </ol>
 </li>
+<li> 
+<a href="#proctoring-settings-sdk">Proctoring Settings SDK</a> 
+<ol type="a">
+<li> <a href="#overview-2">Overview</a></li>
+<li> <a href="#sequence-diagram-1">Sequence Diagram</a></li>
+<li> <a href="#getting-started-1">Getting Started</a></li>
+<li> <a href="#public-methods-1">Public Methods</a></li>
+<li> <a href="#integration-of-report-sdk">Integration of Proctoring Settings SDK</a></li>
+</ol>
+</li>
 <li> <a href="#error-handling">Error Handling</a> </li>
 <li> <a href="#revision-history">FAQs</a> </li>
 </ol>
@@ -1115,6 +1125,211 @@ function readyListener(){
     window.TestMaverick.AutoProctoringReport.mount();
 }
 ```
+---
+
+## Proctoring Settings SDK
+
+### Overview
+
+* When the consumer is inviting candidates to a particular test, there will be an option provided to make that test as a "Proctored Test".
+* If the "Proctored test" option is selected, the consumer will be allowed to configure the proctoring related settings. 
+* The Proctor Settings SDK will be launched when the consumer wants to update the proctoring settings which will be reflected for that particular test.
+
+### Sequence Diagram
+
+<p align="center">
+<img src="images/report-sequence-diagram.png" width="40%" />
+</p>
+
+
+### Getting started
+
+Add below scripts in your index.html
+
+```html
+<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+<script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
+```
+
+Add div elements in your DOM with below shown identifiers:
+
+```html
+<div id=”proctoring-settings-container”> </div>
+```
+
+After adding these references your index.html file should look as below.
+
+`index.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add SDK CSS BUNDLE FILE HERE -->
+    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+    <!-- Add SDK JS BUNDLE FILE HERE -->
+    <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
+    <title>Report SDK Integration Example</title>
+  </head>
+
+  <body>
+      <div id=”proctoring-settings-container”> </div>
+  </body>
+</html>
+```
+---
+### Public methods
+
+#### init(initConfig, callbacks)
+> The SDK will be initialized using the initConfig provided.
+> One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
+> The SDK's initialization configuration must contain an authURL.
+
+<strong>Arguments:</strong>
+<table>
+<thead>
+<tr>
+<th>input parameters</th>
+<th>type</th>
+<th>schema</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+<tr>
+<td>initConfig</td>
+<td>object</td>
+<td>
+
+```
+{
+    {
+        testGUID: String,
+    },
+    `authURL ` : `string`
+}
+```
+</td>
+</tr>
+<tr>
+<td>callbacks </td>
+<td>object</td>
+<td>
+
+```
+{
+    readyListener: function,
+    errorListener: function
+}
+```
+</td>
+</tr>
+</table>
+
+<strong>Callback methods:</strong>
+1. `readyListener`
+   - required: true
+   - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
+
+2. `errorListener(error)`
+   - required: true
+   - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
+   - It will provide an error code with a descriptive message to handle the error accordingly.
+---
+
+#### mount()
+> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
+
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `None`
+    
+<strong>Example :</strong>
+
+```javascript
+ window.TestMaverick.ProctoringSettings.mount();
+```
+---
+#### getErrorLogs()
+> This method will return a list of error logs that occurred during the functioning of SDK.
+
+<strong>Arguments:</strong> `None`
+    
+<strong>Callback methods:</strong>  `None`
+    
+<strong>Return value:</strong>  `List<object>`
+    
+<strong>Example :</strong>
+
+```javascript
+  let errorLogs = window.TestMaverick.ProctoringSettings.getErrorLogs();
+ console.log(errorLogs);
+ /* OUTPUT
+ [
+    {
+        name: “ValidationError”,
+        code: 1202,
+        stack : “ValidationError: Error in callback arguments. . .  ”,
+        message : “Error in callback arguments.”
+    }
+ ]
+ */
+```
+------
+
+### Integration of Proctoring Settings SDK
+
+#### 1. Initialize the SDK
+```javascript
+  function readyListener(){
+    subscribeToEvents();
+  }
+
+  function errorListener(error){
+    console.log(error);
+  }
+
+  const initConfig = {
+      config : {
+           testGUID: "293a30c8-59de-477c-8fc6-2d34b893cd25",
+      },
+      authURL : “<Consumer’s signed request web API url>”
+  }
+
+  // initialize the SDK using above config
+  function initializeSDK(){
+    window.TestMaverick.ProctoringSettings.init(
+        initConfig ,
+        {
+            readyListener,
+            errorListener
+        }
+    )
+  }
+
+```
+
+#### 2. Mount Proctor Settings component
+
+In order to mount the proctor settings component, there must be an element with the below mentioned identifier present in the DOM.
+
+```html
+<div id="proctoring-settings-container"></div>
+```
+
+update ready listener callback as shown below
+
+```javascript
+function readyListener(){
+    subscribeToEvents();
+    // add this line
+    window.TestMaverick.ProctoringSettings.mount();
+}
+```
+
 ---
 
 ## Error handling
