@@ -1,4 +1,3 @@
-
 <p align="center"><img src="images/logo.png" width="20%" /></p>
 <h1 align="center">TestMaverick SDK Integration</h1>
 
@@ -113,7 +112,18 @@
 <li> <a href="#table-of-contents">Table of Contents</a> </li>
 <li> <a href="#introduction">Introduction</a> </li>
 <li> <a href="#overview">Overview</a> </li>
-<li> <a href="#authentication-and-security">Authentication and Security</a> </li>
+<li> <a href="#authentication-and-security">Authentication and Security</a> 
+<ol type="a">
+<li> <a href="#1-registration-and-configuration">Registration and Configuration</a></li>
+<li> <a href="#2-add-signature-api">Add Signature API</a></li>
+<li> <a href="#3-sdk-initialization">SDK initialization</a></li>
+<li> <a href="#public-methods">Public Methods</a>
+<ul>
+<li> <a href="#public-methods">init( initConfig, callbacks )</a>
+</ul>
+</li>
+</ol>
+</li>
 <li> 
 <a href="#auto-proctoring-sdk">Auto Proctoring SDK</a> 
 <ol type="a">
@@ -194,22 +204,18 @@ TestMaverick SDK provides following features:
 ## Overview
 
 <p>
-Below is a top level architectural overview of TestMaverick SDK integration with Consumer’s existing system. 
+Below is a top level architectural overview for integration of TestMaverick SDK with Consumer’s existing system. The Consumer system will integrate TestMaverick’s client SDK which will communicate with the Consumer system for data through events trigger and callbacks. Also TestMaverick SDK provides various public methods which can be accessed by consumers.
 </p>
 
 <p>
-The TestMaverick Client SDK will be integrated into the Consumer system, allowing it to communicate with the system for data through callbacks and event triggers. Additionally, TestMaverick SDK provides a list of publicly accessible methods that can be invoked by the consumers.
-</p>
-
-<p>
-The TestMaverick SDK will store all the Proctoring related information on TestMaverick Server however it will not  store any PII or sensitive information of the user on our server. TestMaverick SDK solely store statistical data related to auto proctoring (i.e Face, audio and browser related violation counts) along with few non-identifiable GUIDs like userGUID, testGUID and attemptGUID, ensuring that no personal information is stored on our end. These identifiers, which are not directly linked to personal information, are essential for keeping the data mapping within the TestMaverick system so that when the TestMaverick Report SDK is loaded in your system, using these non-identifiable GUIDs it will accurately retrieve statistical information mapped to it from our TestMaverick server.
+The TestMaverick SDK will store all the Proctoring related information on TestMaverick Server however it will not  store any PII or sensitive information of the user on our server. TestMaverick  SDK solely store statistical data related to auto proctoring (i.e Face, audio and browser related violation counts) along with few non-identifiable GUIDs like UserGUID, TestGUID and AttemptGUID, ensuring that no personal information is stored on our end. These identifiers, which are not directly linked to personal information, are essential for keeping the data mapping within the TestMaverick system so that when the TestMaverick Report SDK is loaded in your system, using these non-identifiable GUIDs it will accurately retrieve statistical information mapped to it from TestMaverick server.
 </p>
 
 <p align="center">
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
-------
+---
 
 ## Authentication and Security
 
@@ -217,50 +223,55 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 TestMaverick SDK provides a signature based authentication and authorization system to integrate with various existing applications to ensure the security of our APIs. 
 </p>
 
-### Steps to integrate Testmaverick SDK in Consumer's existing system.
-#### 1. Registration and Configuration
-* Consumers need to register with TestMaverick's service to obtain a ConsumerKey and a SecretKey.
-* These keys are essential for authenticating and authorizing requests made to TestMaverick's API using the SDK.
-* Consumers must keep the ConsumerKey and SecretKey confidential. These keys are sensitive information and should not be shared publicly.
-* Consumers are required to provide their domain details where they plan to integrate the SDK.
-* TestMaverick's vendor will whitelist these domains to allow SDK access from those specific domains.
-* This step is a security measure to control which domains are authorized to use the SDK.
-* After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
+<p>
+Following are the steps to be followed by Consumer to integrate SDK with the existing system.
+</p>
+
+## 1. Registration and Configuration
+
+- Consumers need to register with TestMaverick's service to obtain a ConsumerKey and a SecretKey.
+- These keys are essential for authenticating and authorizing requests made to TestMaverick's API using the SDK.
+- Consumers must keep the ConsumerKey and SecretKey confidential. These keys are sensitive information and should not be shared publicly.
+- Consumers are required to provide their domain details where they plan to integrate the SDK.
+- TestMaverick's vendor will whitelist these domains to allow SDK access from those specific domains.
+- This step is a security measure to control which domains are authorized to use the SDK.
+- After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
 
 #### 2. Add Signature API
-* Consumers must provide an API which can generate the signed object in the following output format.<br/>
+
+- Consumers must provide an API which can generate the signed object in the following output format.<br/>
 
 ```json
-    {
-        "security": {
-            "consumerKey": "xxxxxxxx",
-            "domain": "xxxxxxxx",
-            "timestamp": "xxxxxx",
-            "signature": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-            "remoteIpAddress": "xxx.xxx.xxx.xxx"
-            },
-        "request": {
-        "mode": "xxxx",
-        "user": {
-            "id": "xxxxx",
-            "firstName": "xxxxx",
-            "lastName": "xxxxx",
-            "email": "xxxxx",
-        },
-        "meta": "xxxxx"
-        },
-        "userRequest": {
-        "ClientUserGUID": "xxxx",
-        "OrganizationID": "xxxxx",
-        "ClearanceLevel": "xxxxx"
-        }
-    }
+{
+  "security": {
+    "consumerKey": "xxxxxxxx",
+    "domain": "xxxxxxxx",
+    "timestamp": "xxxxxx",
+    "signature": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "remoteIpAddress": "xxx.xxx.xxx.xxx"
+  },
+  "request": {
+    "mode": "xxxx",
+    "user": {
+      "id": "xxxxx",
+      "firstName": "xxxxx",
+      "lastName": "xxxxx",
+      "email": "xxxxx"
+    },
+    "meta": "xxxxx"
+  },
+  "userRequest": {
+    "ClientUserGUID": "xxxx",
+    "OrganizationID": "xxxxx",
+    "ClearanceLevel": "xxxxx"
+  }
+}
 ```
 
-* To create the above signed object, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
-* For .Net core applications following changes can be done to create an API for signed requests.
+- To create the above signed object, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
+- For .Net core applications following changes can be done to create an API for signed requests.
 
-* <p>Consumer should add reference of dll to their project<br/></p>
+- <p>Consumer should add reference of dll to their project<br/></p>
 
 ```javascript
 <ItemGroup>
@@ -270,11 +281,11 @@ TestMaverick SDK provides a signature based authentication and authorization sys
 </ItemGroup>
 ```
 
-* <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL will be provided in the config while initializing the SDK. The definition of the Signature API is given below for your reference.
+- <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL will be provided in the config while initializing the SDK. The definition of the Signature API is given below for your reference.
 
-    - Type : POST
-    - Request Param : [FromBody] object config
-    - <p>Sample Code: <br/></p>
+  - Type : POST
+  - Request Param : [FromBody] object config
+  - <p>Sample Code: <br/></p>
 
 ```c#
 public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] object config)
@@ -291,13 +302,13 @@ public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] object conf
 
             ContentResult contentResult = new ContentResult();
             contentResult.ContentType = "application/json";
-            contentResult.Content =  
+            contentResult.Content =
             JsonSerialize.Serializer(responseData);
             return contentResult;
         }
 ```
 
-* To create a signed request object use the following method provided with dll.
+- To create a signed request object use the following method provided with dll.
 
 ```c#
 public Class YourBusinesLogicClass {
@@ -306,15 +317,15 @@ public Class YourBusinesLogicClass {
     ...
     // Add this method to you code
     public Task<SignRequestModel> getSignedRequest(Object meta) {
-        
+
         // Sample data for meta param
-        // meta = '{\"attemptGUID\":\"c365a912-031b-495d-2c22-15c5d1c48d58\",\"userGUID\":\"e94ca06b-eb21-11ec-9b97-0a264b1a6b74\",\"testGUID\":\"293a30c8-59de-477c-8fc6-2d34b893cd25\",\"type\":\"verification-steps\"}' 
-        
+        // meta = '{\"attemptGUID\":\"c365a912-031b-495d-2c22-15c5d1c48d58\",\"userGUID\":\"e94ca06b-eb21-11ec-9b97-0a264b1a6b74\",\"testGUID\":\"293a30c8-59de-477c-8fc6-2d34b893cd25\",\"type\":\"verification-steps\"}'
+
 
         HMACService hMACService = new HMACService();
         // Populate user information object
         SignRequestRequestParameterUserDetails userDetails = new requestRequestParameterUserDetails("yourUserUniqueId", 0, "first_name",  “abc@useremail.com”, “user_last_name”);
-       
+
         // Populate input request object
         SignRequestRequestParameter requestParameter = new SignRequestRequestParameter("launch_mode", userDetails, meta);
 
@@ -333,10 +344,12 @@ public Class YourBusinesLogicClass {
      ...
 }
 ```
-* Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
+
+- Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
 
 #### 3. SDK initialization
-* The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This  method requires two parameters as given below:</u></b>
+
+- The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This method requires two parameters as given below:</u></b>
 
 <table>
 <thead>
@@ -364,6 +377,7 @@ public Class YourBusinesLogicClass {
     `authURL ` : `string`
 }
 ```
+
 </td>
 </tr>
 <tr>
@@ -377,6 +391,7 @@ public Class YourBusinesLogicClass {
     errorListener: function
 }
 ```
+
 </td>
 </tr>
 </table>
@@ -412,15 +427,18 @@ window.Testmaverick.AutoProctoring.init(
     }
 )
 ```
-------
+
+---
 
 ## Auto Proctoring SDK
 
 ### Overview
-* Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam.
-* This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.
+
+- Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam.
+- This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.
 
 ### Sequence Diagram
+
 <p align="center">
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
 </p>
@@ -459,7 +477,10 @@ window.Testmaverick.AutoProctoring.init(
 <p>Add below scripts in your index.html</p>
 
 ```html
-<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"/>
+<link
+  rel="stylesheet"
+  href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
+/>
 <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"></script>
 ```
 
@@ -470,29 +491,32 @@ window.Testmaverick.AutoProctoring.init(
 <b>For System Check</b>
 
 ```html
-<div id=”system-check-steps-container”> </div>
+<div id="”system-check-steps-container”"></div>
 ```
+
 </li>
 <li>
 <b>For Verification Steps and Auto Proctoring</b>
 
 ```html
-<div :class="isVerificationSteps: '': 'display-none'" >
-    <div id="verification-steps-container"></div>
+<div :class="isVerificationSteps: '': 'display-none'">
+  <div id="verification-steps-container"></div>
 </div>
-
 
 <div :class="!isVerificationSteps: '': 'display-none'">
-    <TestPlayer /> <!-- Put Your Testplayer code or component here  -->
-    <div id="auto-proctoring-container"></div>
+  <TestPlayer />
+  <!-- Put Your Testplayer code or component here  -->
+  <div id="auto-proctoring-container"></div>
 </div>
 ```
+
 </li>
 </ol>
 
 <p>After adding these references your index.html file should look as below.</p>
 
 `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -500,33 +524,38 @@ window.Testmaverick.AutoProctoring.init(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Add SDK CSS BUNDLE FILE HERE -->
-    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
+    <link
+      rel="stylesheet"
+      href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
     />
     <!-- Add SDK JS BUNDLE FILE HERE -->
-    <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"
-    ></script>
+    <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"></script>
     <title>Auto Proctoring SDK Integration Example</title>
   </head>
 
   <body>
-     <div :class=’isVerificationSteps? “”: “display-none“’ >
-        <div id="verification-steps-container"></div>
-     </div>
-     <div :class=’!isVerificationSteps? “”: “display-none“’>
-        <TestPlayer /> <!-- Put Your Testplayer code or component here  -->
-        <div id="auto-proctoring-container"></div>
-     </div>
+    <div :class="’isVerificationSteps?" “”: “display-none“’>
+      <div id="verification-steps-container"></div>
+    </div>
+    <div :class="’!isVerificationSteps?" “”: “display-none“’>
+      <TestPlayer />
+      <!-- Put Your Testplayer code or component here  -->
+      <div id="auto-proctoring-container"></div>
+    </div>
   </body>
 </html>
 ```
+
 ### Public Methods
 
 #### init(initConfig, callbacks)
+
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
 
 <strong>Arguments:</strong>
+
 <table>
 <thead>
 <tr>
@@ -553,6 +582,7 @@ window.Testmaverick.AutoProctoring.init(
     `authURL ` : `string`
 }
 ```
+
 </td>
 </tr>
 <tr>
@@ -567,96 +597,110 @@ window.Testmaverick.AutoProctoring.init(
     getUserDetails: function,
 }
 ```
+
 </td>
 </tr>
 </table>
 
 <strong>Callback methods:</strong>
+
 1. `readyListener`
+
    - required: true
    - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
 
 2. `errorListener(error)`
+
    - required: true
    - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
    - It will provide an error code with a descriptive message to handle the error accordingly.
-  
+
 3. `getUserDetails(List<userGUID>)`
-    - required : true if type is “verification-steps”
-    - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email 
+   - required : true if type is “verification-steps”
+   - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email
 
 ---
 
 #### mount()
-> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
+
+> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.Testmaverick.AutoProctoring.mount();
+window.Testmaverick.AutoProctoring.mount();
 ```
+
 ---
 
 #### unmountVerificationSteps()
+
 > this method will unmount all the UI components related to verification steps that were mounted in the DOM.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.Testmaverick.AutoProctoring.unmountVerificationSteps();
+window.Testmaverick.AutoProctoring.unmountVerificationSteps();
 ```
+
 ---
+
 #### unmountProctorPlayer()
+
 > This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.Testmaverick.AutoProctoring.unmountProctorPlayer();
+window.Testmaverick.AutoProctoring.unmountProctorPlayer();
 ```
+
 ---
 
 #### startAutoProctoring()
+
 > This method will start auto proctoring services.
 > it will trigger the autoProctoringStarted event on successfully starting the auto proctoring.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.TestMaverick.AutoProctoring.startAutoProctoring();
+window.TestMaverick.AutoProctoring.startAutoProctoring();
 ```
+
 ---
 
 #### stopAutoProctoring(submitTest)
-> This method will be used to stop auto proctoring. 
+
+> This method will be used to stop auto proctoring.
 > Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.
 > Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.
 
-<strong>Arguments:</strong> 
+<strong>Arguments:</strong>
 
 <table>
 <thead>
@@ -676,52 +720,57 @@ window.Testmaverick.AutoProctoring.init(
 ```
 true | false
 ```
+
 </td>
 </tr>
 </table>
 
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.Testmaverick.AutoProctoring.stopAutoProctoring(submitTest);
+window.Testmaverick.AutoProctoring.stopAutoProctoring(submitTest);
 ```
+
 ---
 
 #### toggleWebcamPreview()
+
 > This method will be used to open or close the webcam preview during the proctoring.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.TestMaverick.AutoProctoring.toggleWebcamPreview();
+window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 ```
+
 ---
 
 #### getErrorLogs()
+
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `List<object>`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `List<object>`
+
 <strong>Example :</strong>
 
 ```javascript
-  let errorLogs = window.TestMaverick.AutoProctoring.getErrorLogs();
- console.log(errorLogs);
- /* OUTPUT
+let errorLogs = window.TestMaverick.AutoProctoring.getErrorLogs();
+console.log(errorLogs);
+/* OUTPUT
  [
     {
         name: “ValidationError”,
@@ -732,30 +781,37 @@ true | false
  ]
  */
 ```
+
 ---
 
 ### Events
 
-#### verificationStepsExited : 
+#### verificationStepsExited :
+
 > This event will be triggered when the user exits verification steps by clicking on the exit button.
 
 #### globalSystemCheckCompleted:
+
 > This event will be emitted when the system-check steps are successfully completed.
 
 #### verificationStepsCompleted:
+
 > When the user successfully completes the verification stages, this event will be triggered.
 >
 > On listening to this event, the consumer can either start auto-proctoring or perform any other tasks before starting the test.
 
 #### autoProctoringStarted:
-> This event is triggered when auto proctoring is started without any errors. 
+
+> This event is triggered when auto proctoring is started without any errors.
 
 #### autoProctoringAborted:
+
 > This event will be triggered if an interference, like a webcam stream being closed while proctoring, causes the auto proctoring to stop working.
 >
 > If the user wants to resume proctoring, they must again complete the verification steps by executing method mount("verification-steps" type) before resuming the test.
 
 #### autoProctoringStopped:
+
 > This event is triggered when auto proctoring is stopped without any errors.</p>
 
 ---
@@ -806,6 +862,7 @@ const initConfig = {
     }
  )
 ```
+
 </ol>
 
 #### 2. Mount SystemCheck component
@@ -813,15 +870,16 @@ const initConfig = {
 In order to mount the system check UI components, there must be an element with the below mentioned identifier present in the DOM.
 
 ```html
-<div id=”system-check-steps-container”> </div>
+<div id="”system-check-steps-container”"></div>
 ```
+
 update ready listener callback as shown below
 
 ```javascript
-function readyListener(){
-    subscribeToEvents();
-        // add this line
-    window.Testvaverick.AutoProctoring.mount();
+function readyListener() {
+  subscribeToEvents();
+  // add this line
+  window.Testvaverick.AutoProctoring.mount();
 }
 ```
 
@@ -888,6 +946,7 @@ window.TestMaverick.AutoProctoring.init(
     getUserDetails
 })
 ```
+
 #### 2. Mount Verification Steps Component
 
 In order to mount the system check UI components, there must be an element with the below mentioned identifier present in the DOM.
@@ -903,13 +962,14 @@ In order to mount the system check UI components, there must be an element with 
     <div id="auto-proctoring-container"></div>
 </div>
 ```
+
 update ready listener callback as shown below
 
 ```javascript
-function readyListener(){
-    subscribeToEvents();
-    window.Testmaverick.AutoProctoring.mount();
-    isVerificationSteps = true;
+function readyListener() {
+  subscribeToEvents();
+  window.Testmaverick.AutoProctoring.mount();
+  isVerificationSteps = true;
 }
 ```
 
@@ -917,48 +977,45 @@ function readyListener(){
 
 ```javascript
 function startAutoProctoring() {
-     window.Testmaverick.AutoProctoring.startAutoProctoring()
+  window.Testmaverick.AutoProctoring.startAutoProctoring();
 }
 
-function subscribeToEvents(){   
-   window.Testmaverick.AutoProctoring.on(
-      "verificationStepsCompleted", () => {
-         window.Testmaverick.AutoProctoring.unmountVerificationSteps();
-         startAutoProctoring();
-    });
+function subscribeToEvents() {
+  window.Testmaverick.AutoProctoring.on("verificationStepsCompleted", () => {
+    window.Testmaverick.AutoProctoring.unmountVerificationSteps();
+    startAutoProctoring();
+  });
 
-   window.TestMaverick.AutoProctoring.on(
-        "autoProctoringStarted", () => {
-        isVerificationSteps = false;
-   });
+  window.TestMaverick.AutoProctoring.on("autoProctoringStarted", () => {
+    isVerificationSteps = false;
+  });
 }
 ```
+
 #### 4. Stop Auto Proctoring
 
 ```javascript
-function subscribeToEvents(){
-    window.TestMaverick.AutoProctoring.on(
-       "autoProctoringStopped", () => {
-         // code here     
-    });
+function subscribeToEvents() {
+  window.TestMaverick.AutoProctoring.on("autoProctoringStopped", () => {
+    // code here
+  });
 }
 
-
 function stopAutoProctoring() {
-    let submitTest = true;
-    window.TestMaverick.AutoProctoring.stopAutoProctoring(submitTest );
-};
+  let submitTest = true;
+  window.TestMaverick.AutoProctoring.stopAutoProctoring(submitTest);
+}
 ```
 
-------
+---
 
 ## Auto Proctoring Report SDK
 
 ### Overview
 
-* The AutoProctoring Report SDK is a powerful tool built to give a deep look into online test proctoring.
-* It helps proctors keep a close eye on how candidates behave during online exams, making the process more efficient.
-* This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
+- The AutoProctoring Report SDK is a powerful tool built to give a deep look into online test proctoring.
+- It helps proctors keep a close eye on how candidates behave during online exams, making the process more efficient.
+- This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
 
 ### Sequence Diagram
 
@@ -966,25 +1023,28 @@ function stopAutoProctoring() {
 <img src="images/report-sequence-diagram.png" width="40%" />
 </p>
 
-
 ### Getting started
 
 Add below scripts in your index.html
 
 ```html
-<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.css"/>
+<link
+  rel="stylesheet"
+  href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.css"
+/>
 <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.js"></script>
 ```
 
 Add div elements in your DOM with below shown identifiers:
 
 ```html
-<div id=”reports-container”> </div>
+<div id="”reports-container”"></div>
 ```
 
 After adding these references your index.html file should look as below.
 
 `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -992,26 +1052,33 @@ After adding these references your index.html file should look as below.
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Add SDK CSS BUNDLE FILE HERE -->
-    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.css"/>
+    <link
+      rel="stylesheet"
+      href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.css"
+    />
     <!-- Add SDK JS BUNDLE FILE HERE -->
     <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/report-sdk/report-sdk.js"></script>
     <title>Report SDK Integration Example</title>
   </head>
 
   <body>
-      <div id=”reports-container”> </div>
+    <div id="”reports-container”"></div>
   </body>
 </html>
 ```
+
 ---
+
 ### Public methods
 
 #### init(initConfig, callbacks)
+
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
 
 <strong>Arguments:</strong>
+
 <table>
 <thead>
 <tr>
@@ -1041,6 +1108,7 @@ After adding these references your index.html file should look as below.
     `authURL ` : `string`
 }
 ```
+
 </td>
 </tr>
 <tr>
@@ -1056,70 +1124,78 @@ After adding these references your index.html file should look as below.
     getUserDetails: function,
 }
 ```
+
 </td>
 </tr>
 </table>
 
 <strong>Callback methods:</strong>
+
 1. `readyListener`
+
    - required: true
    - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
 
 2. `errorListener(error)`
+
    - required: true
    - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
    - It will provide an error code with a descriptive message to handle the error accordingly.
 
 3. `getFilteredUsers(filter)`
-    - required : true if type is “verification-steps”
-    - This call back function will get called whenever there is a need to search or sort candidates by name.
-    - filter object schema:
-      <code>
-      {
-            searchKeyword : "joe"
-            sortBy : true;
-            pageNo : 1;
-            perPageRowCount : 20;
-            oldPerPageRowCount : 20 ;
-            testGUID: "a2a00246-2653-4d8f-bbeb-13aa8cf83ae8"
-      }
-      </code>
+   - required : true if type is “verification-steps”
+   - This call back function will get called whenever there is a need to search or sort candidates by name.
+   - filter object schema:
+     <code>
+     {
+     searchKeyword : "joe"
+     sortBy : true;
+     pageNo : 1;
+     perPageRowCount : 20;
+     oldPerPageRowCount : 20 ;
+     testGUID: "a2a00246-2653-4d8f-bbeb-13aa8cf83ae8"
+     }
+     </code>
 4. `getUserDetails(List<userGUID>)`
-    - required : true if type is “verification-steps”
-    - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email 
+   - required : true if type is “verification-steps”
+   - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email
 
 ---
 
 #### mount()
-> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
+
+> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.TestMaverick.AutoProctoringReport.mount();
+window.TestMaverick.AutoProctoringReport.mount();
 ```
+
 ---
+
 #### getErrorLogs()
+
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `List<object>`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `List<object>`
+
 <strong>Example :</strong>
 
 ```javascript
-  let errorLogs = window.TestMaverick.AutoProctoringReport.getErrorLogs();
- console.log(errorLogs);
- /* OUTPUT
+let errorLogs = window.TestMaverick.AutoProctoringReport.getErrorLogs();
+console.log(errorLogs);
+/* OUTPUT
  [
     {
         name: “ValidationError”,
@@ -1130,11 +1206,13 @@ After adding these references your index.html file should look as below.
  ]
  */
 ```
-------
+
+---
 
 ### Integration of Report SDK
 
 #### 1. Initialize the SDK
+
 ```javascript
   function readyListener(){
     subscribeToEvents();
@@ -1155,7 +1233,7 @@ After adding these references your index.html file should look as below.
 	}
   */
 
-  function getFilteredUsers(filter) { 
+  function getFilteredUsers(filter) {
       const userData = // fetch data based on filter
       return userData
   }
@@ -1209,21 +1287,22 @@ In order to mount the report UI components, there must be an element with the be
 update ready listener callback as shown below
 
 ```javascript
-function readyListener(){
-    subscribeToEvents();
-    // add this line
-    window.TestMaverick.AutoProctoringReport.mount();
+function readyListener() {
+  subscribeToEvents();
+  // add this line
+  window.TestMaverick.AutoProctoringReport.mount();
 }
 ```
+
 ---
 
 ## Proctoring Settings SDK
 
 ### Overview
 
-* When the consumer is inviting candidates to a particular test, there will be an option provided to make that test as a "Proctored Test".
-* If the "Proctored test" option is selected, the consumer will be allowed to configure the proctoring related settings. 
-* The Proctor Settings SDK will be launched when the consumer wants to update the proctoring settings which will be reflected for that particular test.
+- When the consumer is inviting candidates to a particular test, there will be an option provided to make that test as a "Proctored Test".
+- If the "Proctored test" option is selected, the consumer will be allowed to configure the proctoring related settings.
+- The Proctor Settings SDK will be launched when the consumer wants to update the proctoring settings which will be reflected for that particular test.
 
 ### Sequence Diagram
 
@@ -1231,25 +1310,28 @@ function readyListener(){
 <img src="images/report-sequence-diagram.png" width="40%" />
 </p>
 
-
 ### Getting started
 
 Add below scripts in your index.html
 
 ```html
-<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+<link
+  rel="stylesheet"
+  href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"
+/>
 <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
 ```
 
 Add div elements in your DOM with below shown identifiers:
 
 ```html
-<div id=”proctoring-settings-container”> </div>
+<div id="”proctoring-settings-container”"></div>
 ```
 
 After adding these references your index.html file should look as below.
 
 `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -1257,26 +1339,33 @@ After adding these references your index.html file should look as below.
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Add SDK CSS BUNDLE FILE HERE -->
-    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+    <link
+      rel="stylesheet"
+      href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"
+    />
     <!-- Add SDK JS BUNDLE FILE HERE -->
     <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
     <title>Report SDK Integration Example</title>
   </head>
 
   <body>
-      <div id=”proctoring-settings-container”> </div>
+    <div id="”proctoring-settings-container”"></div>
   </body>
 </html>
 ```
+
 ---
+
 ### Public methods
 
 #### init(initConfig, callbacks)
+
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
 
 <strong>Arguments:</strong>
+
 <table>
 <thead>
 <tr>
@@ -1300,6 +1389,7 @@ After adding these references your index.html file should look as below.
     `authURL ` : `string`
 }
 ```
+
 </td>
 </tr>
 <tr>
@@ -1313,12 +1403,15 @@ After adding these references your index.html file should look as below.
     errorListener: function
 }
 ```
+
 </td>
 </tr>
 </table>
 
 <strong>Callback methods:</strong>
+
 1. `readyListener`
+
    - required: true
    - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
 
@@ -1326,38 +1419,43 @@ After adding these references your index.html file should look as below.
    - required: true
    - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
    - It will provide an error code with a descriptive message to handle the error accordingly.
+
 ---
 
 #### mount()
-> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
+
+> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.TestMaverick.ProctoringSettings.mount();
+window.TestMaverick.ProctoringSettings.mount();
 ```
+
 ---
+
 #### getErrorLogs()
+
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `List<object>`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `List<object>`
+
 <strong>Example :</strong>
 
 ```javascript
-  let errorLogs = window.TestMaverick.ProctoringSettings.getErrorLogs();
- console.log(errorLogs);
- /* OUTPUT
+let errorLogs = window.TestMaverick.ProctoringSettings.getErrorLogs();
+console.log(errorLogs);
+/* OUTPUT
  [
     {
         name: “ValidationError”,
@@ -1368,11 +1466,13 @@ After adding these references your index.html file should look as below.
  ]
  */
 ```
-------
+
+---
 
 ### Integration of Proctoring Settings SDK
 
 #### 1. Initialize the SDK
+
 ```javascript
   function readyListener(){
     subscribeToEvents();
@@ -1413,10 +1513,10 @@ In order to mount the proctor settings component, there must be an element with 
 update ready listener callback as shown below
 
 ```javascript
-function readyListener(){
-    subscribeToEvents();
-    // add this line
-    window.TestMaverick.ProctoringSettings.mount();
+function readyListener() {
+  subscribeToEvents();
+  // add this line
+  window.TestMaverick.ProctoringSettings.mount();
 }
 ```
 
@@ -1426,9 +1526,9 @@ function readyListener(){
 
 ### Overview
 
-* When the consumer is inviting candidates to a particular test, there will be an option provided to make that test as a "Proctored Test".
-* If the "Proctored test" option is selected, the consumer will be allowed to configure the proctoring related settings. 
-* The Proctor Settings SDK will be launched when the consumer wants to update the proctoring settings which will be reflected for that particular test.
+- When the consumer is inviting candidates to a particular test, there will be an option provided to make that test as a "Proctored Test".
+- If the "Proctored test" option is selected, the consumer will be allowed to configure the proctoring related settings.
+- The Proctor Settings SDK will be launched when the consumer wants to update the proctoring settings which will be reflected for that particular test.
 
 ### Sequence Diagram
 
@@ -1436,25 +1536,28 @@ function readyListener(){
 <img src="images/report-sequence-diagram.png" width="40%" />
 </p>
 
-
 ### Getting started
 
 Add below scripts in your index.html
 
 ```html
-<link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+<link
+  rel="stylesheet"
+  href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"
+/>
 <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
 ```
 
 Add div elements in your DOM with below shown identifiers:
 
 ```html
-<div id=”proctoring-settings-container”> </div>
+<div id="”proctoring-settings-container”"></div>
 ```
 
 After adding these references your index.html file should look as below.
 
 `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -1462,26 +1565,33 @@ After adding these references your index.html file should look as below.
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Add SDK CSS BUNDLE FILE HERE -->
-    <link rel="stylesheet" href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"/>
+    <link
+      rel="stylesheet"
+      href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.css"
+    />
     <!-- Add SDK JS BUNDLE FILE HERE -->
     <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/proctoring-settings-sdk/proctoring-settings-sdk.js"></script>
     <title>Report SDK Integration Example</title>
   </head>
 
   <body>
-      <div id=”proctoring-settings-container”> </div>
+    <div id="”proctoring-settings-container”"></div>
   </body>
 </html>
 ```
+
 ---
+
 ### Public methods
 
 #### init(initConfig, callbacks)
+
 > The SDK will be initialized using the initConfig provided.
 > One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 > The SDK's initialization configuration must contain an authURL.
 
 <strong>Arguments:</strong>
+
 <table>
 <thead>
 <tr>
@@ -1505,6 +1615,7 @@ After adding these references your index.html file should look as below.
     `authURL ` : `string`
 }
 ```
+
 </td>
 </tr>
 <tr>
@@ -1518,12 +1629,15 @@ After adding these references your index.html file should look as below.
     errorListener: function
 }
 ```
+
 </td>
 </tr>
 </table>
 
 <strong>Callback methods:</strong>
+
 1. `readyListener`
+
    - required: true
    - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
 
@@ -1531,38 +1645,43 @@ After adding these references your index.html file should look as below.
    - required: true
    - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
    - It will provide an error code with a descriptive message to handle the error accordingly.
+
 ---
 
 #### mount()
-> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization. 
+
+> The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `None`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `None`
+
 <strong>Example :</strong>
 
 ```javascript
- window.TestMaverick.ProctoringSettings.mount();
+window.TestMaverick.ProctoringSettings.mount();
 ```
+
 ---
+
 #### getErrorLogs()
+
 > This method will return a list of error logs that occurred during the functioning of SDK.
 
 <strong>Arguments:</strong> `None`
-    
-<strong>Callback methods:</strong>  `None`
-    
-<strong>Return value:</strong>  `List<object>`
-    
+
+<strong>Callback methods:</strong> `None`
+
+<strong>Return value:</strong> `List<object>`
+
 <strong>Example :</strong>
 
 ```javascript
-  let errorLogs = window.TestMaverick.ProctoringSettings.getErrorLogs();
- console.log(errorLogs);
- /* OUTPUT
+let errorLogs = window.TestMaverick.ProctoringSettings.getErrorLogs();
+console.log(errorLogs);
+/* OUTPUT
  [
     {
         name: “ValidationError”,
@@ -1573,11 +1692,13 @@ After adding these references your index.html file should look as below.
  ]
  */
 ```
-------
+
+---
 
 ### Integration of Manual Proctoring SDK
 
 #### 1. Initialize the SDK
+
 ```javascript
   function readyListener(){
     subscribeToEvents();
@@ -1618,10 +1739,10 @@ In order to mount the proctor settings component, there must be an element with 
 update ready listener callback as shown below
 
 ```javascript
-function readyListener(){
-    subscribeToEvents();
-    // add this line
-    window.TestMaverick.ProctoringSettings.mount();
+function readyListener() {
+  subscribeToEvents();
+  // add this line
+  window.TestMaverick.ProctoringSettings.mount();
 }
 ```
 
