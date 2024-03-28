@@ -1,6 +1,6 @@
 
 <p align="center"><img src="images/logo.png" width="20%" /></p>
-<h1 align="center">TestMaverick SDK</h1>
+<h1 align="center">TestMaverick SDK Integration</h1>
 
 ## Revision History
 
@@ -10,29 +10,107 @@
 <th>Date</th>
 <th>Version No</th>
 <th>Author</th>
+<th>Comments</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>22<sup>nd</sup> September, 2023</td>
-<td>1.0</td>
+<td>10<sup>th</sup> Nov, 2023</td>
+<td>v2023.11.1</td>
 <td>Zeus</td>
+<td>SDK Overview and Integration steps</td>
 </tr>
 <tr>
-<td>24<sup>th</sup> September, 2023</td>
-<td>1.1</td>
+<td>28<sup>th</sup> Nov, 2023</td>
+<td>v2023.11.28</td>
 <td>Zeus</td>
+<td>Change the path for client scripts</td>
 </tr>
-<tr>
-<td>20<sup>th</sup> October, 2023</td>
-<td>1.2</td>
+<tr class="odd">
+<td>29<sup>th</sup> Nov, 2023</td>
+<td>v2023.11.29</td>
 <td>Zeus</td>
+<td>Update details related to response object of Auth API</td>
+</tr>
+<tr class="header">
+<td>4<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.04</td>
+<td>Zeus</td>
+<td>Add notes</td>
+</tr>
+<tr class="odd">
+<td>5<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.05</td>
+<td>Zeus</td>
+<td>Fix typo errors in code snippet</td>
+</tr>
+<tr class="header">
+<td>11<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.11</td>
+<td>Zeus</td>
+<td>Add documentation for Proctoring Settings</td>
+</tr>
+<tr class="odd">
+<td>14<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.14</td>
+<td>Zeus</td>
+<td>Update Report SDK config</td>
+</tr>
+<tr class="header">
+<td>5<sup>th</sup> Jan, 2024</td>
+<td>v2024.01.05</td>
+<td>Zeus</td>
+<td>Add documentation for Proctoring Setting SDK</td>
+</tr>
+<tr class="odd">
+<td>16<sup>th</sup> Jan,2024</td>
+<td>v2024.01.16</td>
+<td>Zeus</td>
+<td>Add documentation for webhook and auth api changes</td>
+</tr>
+<tr class="header">
+<td>19<sup>th</sup> Jan,2024</td>
+<td>v2024.01.19</td>
+<td>Zeus</td>
+<td><p>Add customHeaders field in SDK initialization</p>
+<p>and rename userGUID field</p></td>
+</tr>
+<tr class="odd">
+<td>1st Feb, 2024</td>
+<td>v2024.02.01</td>
+<td>Zeus</td>
+<td>Add “listOfIFrames” field in Auto Proctoring SDK initialization.</td>
+</tr>
+<tr class="header">
+<td>7<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.02</td>
+<td>Zeus</td>
+<td>Update flag for Iframe and Event management for iframe window in Auto Proctoring SDK.</td>
+</tr>
+<tr class="odd">
+<td>20<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.20</td>
+<td>Zeus</td>
+<td>Add documentation for Submit API.</td>
+</tr>
+<tr class="header">
+<td>28<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.28</td>
+<td>Zeus</td>
+<td>Add Event for Mark as Failed action</td>
+</tr>
+<tr class="odd">
+<td>20<sup>th</sup> Mar, 2024</td>
+<td>v2024.03.20</td>
+<td>Zeus</td>
+<td>Add event for camera alerts</td>
 </tr>
 </table>
 
 ## Table of Contents
 
 <ol>
+<li> <a href="#table-of-contents">Table of Contents</a> </li>
 <li> <a href="#introduction">Introduction</a> </li>
 <li> <a href="#overview">Overview</a> </li>
 <li> <a href="#authentication-and-security">Authentication and Security</a> </li>
