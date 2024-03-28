@@ -217,7 +217,7 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 
 ---
 
-## Authentication and Security
+# Authentication and Security
 
 <p>
 TestMaverick SDK provides a signature based authentication and authorization system to integrate with various existing applications to ensure the security of our APIs. 
@@ -237,75 +237,97 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 - This step is a security measure to control which domains are authorized to use the SDK.
 - After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
 
-#### 2. Add Signature API
+## 2. Add Signature API
 
-- Consumers must provide an API which can generate the signed object in the following output format.<br/>
+- Consumers must provide an API which can generate the signed object for SDK in the following output format.
+  <br/>
 
-```json
-{
-  "security": {
-    "consumerKey": "xxxxxxxx",
-    "domain": "xxxxxxxx",
-    "timestamp": "xxxxxx",
-    "signature": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "remoteIpAddress": "xxx.xxx.xxx.xxx"
-  },
-  "request": {
-    "mode": "xxxx",
-    "user": {
-      "id": "xxxxx",
-      "firstName": "xxxxx",
-      "lastName": "xxxxx",
-      "email": "xxxxx"
+    ```json
+    {
+        "security": {
+            "consumerKey": "xxxxxxxx",
+            "domain": "xxxxxxxx",
+            "timestamp": xxxxxx,
+            "signature": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "remoteIpAddress": "xxx.xxx.xxx.xxx"
     },
-    "meta": "xxxxx"
-  },
-  "userRequest": {
-    "ClientUserGUID": "xxxx",
-    "OrganizationID": "xxxxx",
-    "ClearanceLevel": "xxxxx"
-  }
-}
-```
+        "request": {
+            "mode": "xxxx",
+            "user": {
+                "id": "xxxxx",
+                "firstName": "xxxxx",
+                "lastName": "xxxxx",
+                "email": "xxxxx",
+                "clearanceLevel": "xxxxx"
+            },
+            "meta": "xxxxx"
+        },
+        "userRequest": {
+            "userID": "xxxx",
+            "OrganizationID": "xxxxx",
+            "ClearanceLevel": "xxxxx"
+        }
+    }
+    ```
 
-- To create the above signed object, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
+- To create the above signed object in .NET core application, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
 - For .Net core applications following changes can be done to create an API for signed requests.
+- Consumers should add reference of TestMaverick.SDK.Security.dll to their project.
+  <br/>
 
-- <p>Consumer should add reference of dll to their project<br/></p>
+    ```javascript
+    <ItemGroup>
+    <Reference Include="TestMaverick.SDK.Security">
+        <HintPath>".\Lib\TestMaverick.SDK.Security.dll</HintPath>
+    </Reference>
+    </ItemGroup>
+    ```
 
-```javascript
-<ItemGroup>
-  <Reference Include="TestMaverick.SDK.Security">
-    <HintPath>".\Lib\TestMaverick.SDK.Security.dll</HintPath>
-  </Reference>
-</ItemGroup>
-```
-
-- <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL will be provided in the config while initializing the SDK. The definition of the Signature API is given below for your reference.
+- <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL should be provided in the config while initializing the TestMaverick SDK. The definition of the Signature API is given below for your reference.
 
   - Type : POST
-  - Request Param : [FromBody] object config
-  - <p>Sample Code: <br/></p>
+  - Request Param : [FromBody] signatureRequestModel <br/>
+            { <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp; **meta** : String <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp; **userRequest** : String <br/>
+            } 
+            <br/>
+   - Response Data :  <br/>
+            { <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp; **responseObject** : Object <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp; **statusCode** : Integer <br/>
+                    <ul>
+                        <li> SUCCESS = 0 </li>
+                        <li> EXCEPTION = 1 </li>
+                    </ul>
+            } 
+            <br/>
 
 ```c#
-public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] object config)
+ public class signatureRequestModel
+    {
+        public string? meta { get; set; }
+        public string? userRequest { get; set; }
+    }
+
+
+public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] signatureRequestModel signatureRequestModel )
         {
-
-
             // Add your logic to call a service which will create a signature for a given request object.
-            // Object signedRequest = GetSignedReq();   // This is sample call
+            // Object signedRequest = getSignedRequest(signatureRequestModel.meta,signatureRequestModel.userRequest);   // This is sample call
+            
             // Then return API response in following data structure
-
             Object responseData = new Object();
             responseData.responseObject = signedRequest;
             responseData.statusCode = 0;
 
             ContentResult contentResult = new ContentResult();
             contentResult.ContentType = "application/json";
-            contentResult.Content =
+            contentResult.Content =  
             JsonSerialize.Serializer(responseData);
             return contentResult;
         }
+
 ```
 
 - To create a signed request object use the following method provided with dll.
@@ -316,117 +338,118 @@ public Class YourBusinesLogicClass {
     ...
     ...
     // Add this method to you code
-    public Task<SignRequestModel> getSignedRequest(Object meta) {
-
+    public Task<SignRequestModel> getSignedRequest(string? meta =   null , string? userRequest = null)
+    {
         // Sample data for meta param
-        // meta = '{\"attemptGUID\":\"c365a912-031b-495d-2c22-15c5d1c48d58\",\"userGUID\":\"e94ca06b-eb21-11ec-9b97-0a264b1a6b74\",\"testGUID\":\"293a30c8-59de-477c-8fc6-2d34b893cd25\",\"type\":\"verification-steps\"}'
+        // meta ='{\"attemptGUID\":\"c365a912-031b-495d-2c22-15c5d1c48d58\",\"userID\":\"e94ca06b-eb21-11ec-9b97-0a264b1a6b74\",\"testGUID\":\"293a30c8-59de-477c-8fc6-2d34b893cd25\",\"type\":\"verification-steps\"}'
 
+        HMACService hMACService = new HMACService();        
 
-        HMACService hMACService = new HMACService();
         // Populate user information object
         SignRequestRequestParameterUserDetails userDetails = new requestRequestParameterUserDetails("yourUserUniqueId", 0, "first_name",  “abc@useremail.com”, “user_last_name”);
-
+       
         // Populate input request object
         SignRequestRequestParameter requestParameter = new SignRequestRequestParameter("launch_mode", userDetails, meta);
-
         // Populate Security object for signature generation
         SignRequestSecurityParameter security = new SignRequestSecurityParameter("yourConsumerKey", "yourDomain", 1234567890, "IP address of requesting client");
 
         //  Populate input data model for the signature generation
-        SignRequestModel signRequestModel = new SignRequestModel(security, requestParameter);
-
+        SignRequestModel signRequestModel = new SignRequestModel(security, requestParameter, userRequest);
 
         // Pass the above input model to create signature using dll
         return await hMACService.CreateHMACSignature(signRequestModel, "secret");
-     }
+    }
      ...
      ...
      ...
-}
+ }
+
 ```
 
 - Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
 
-#### 3. SDK initialization
+**Note :** <br/>
+- The “domain” attribute in the security object should not include http/https protocols. <br/>
+e.g  <br/>
 
-- The TestMaverick SDK provides the init method for initializing the SDK with required configuration based on consumers requirement. <b><u>This method requires two parameters as given below:</u></b>
-
-<table>
-<thead>
-<tr>
-<th>input parameters</th>
-<th>type</th>
-<th>schema</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-<tr>
-<td>initConfig</td>
-<td>object</td>
-<td>
-
-```
-{
+    ```json
     {
-        attemptGUID: `string`,
-        userGUID: `string`,
-        testGUID: `string`,
-        type : `string`
-    },
-    `authURL ` : `string`
-}
-```
+        "security": {
+            "domain": "www.example.com"
+            ...
+            ...   
 
-</td>
-</tr>
-<tr>
-<td>callbacks </td>
-<td>object</td>
-<td>
+        }
+    }
+    ```
+## 3. SDK initialization
 
-```
-{
-    readyListener: function,
-    errorListener: function
-}
-```
+The TestMaverick SDK provides the **init** method for initializing the SDK with required configuration based on consumers requirement. This  method requires two parameters as given below:
 
-</td>
-</tr>
-</table>
+## <u>Public Methods </u>
+
+### init( initConfig, callbacks )
+- The SDK will be initialized using the initConfig provided.
+- One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful. 
+- The SDK's initialization configuration must contain an authURL.
+
+<u>Arguments: </u>
+- initConfig : Object
+    - **config**: object
+        - **testID**: String(required)
+            - **Description**: Unique identifier to identify the test.
+            - **Example**: "655-11ec-9b97-0a"
+        - **userID**: String (required)
+            - **Description:** Unique identifier to identify the user.
+            - **Example:** "dc49115b-e655-11ec-9b97-0a264b1a6b74"
+        - **attemptID**: String (required only if type is verification-steps)
+            - **Description**: Unique identifier to identify the attempt of the test.
+            - **Example**: "7557fc68-fc1a-4755-b58e-9f6055fcebe8"
+        - **type**: String (required)
+            - **Description**: Denotes the type of configuration
+            - The **type** can be:
+                - “system-check”
+                - “verification-steps”
+                - More values may be added in the future.
+    - **authURL** : String
+        - required: true
+- callbacks: object
+- **readyListener():** function
+    - required: true
+    - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
+- **errorListener(error) :** function
+    - required: true
+    - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
+    - It will provide an error code with a descriptive message to handle the error accordingly.
+
+
 
 <strong>Sample code :</strong>
 
 ```javascript
 const initConfig  = {
    config: {
-      attemptGUID : “7557fc68-fc1a-4755-b58e-9f6055fcebe8”
-      userGUID : “dc49115b-e655-11ec-9b97-0a264b1a6b74”,
-      testGUID : “xyz” ,
+      attemptID : “7557fc68-fc1a-4755-b58e-9f6055fcebe8”
+      userID : “dc49115b-e655-11ec-9b97-0a264b1a6b74”,
+      testID : “xyz” ,
       type : “verification-steps”
    },
    authURL : “<consumers signed request web API URL>”
  }
-
-const readyListener = function() {
-    // sdk is initalized
-}
-
-const errorListener = function(error) {
-    // perform error handling here
-}
-
-// initialize the SDK using above config
-window.Testmaverick.AutoProctoring.init(
-    initConfig ,
-    {
-       readyListener,
-       errorListener,
-       getUserDetails
-    }
-)
+    // initialize the SDK using above config
+    window.TestMaverick.AutoProctoring.init(
+        initConfig ,
+        {
+            readyListener,
+            errorListener
+        }
+    )
 ```
+**Note :**
+- When the type field is set to "system-check", the system will only perform hardware checks, excluding regular verification steps.
+<p align="center">
+<img src="images/system_check.png" alt="Overview arch" />
+</p>
 
 ---
 
@@ -443,32 +466,32 @@ window.Testmaverick.AutoProctoring.init(
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
 </p>
 
-### Getting Started
+### <u> Getting Started </u>
 
 <p>Download the following files and add them to your public directory of your client application.</p>
 <table>
 <thead>
 <tr>
-<th>Script files</th>
+<th>Description</th>
 <th>URL</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>jsstore-worker.js</td>
-<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/worker/jsstore-worker.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/worker/jsstore-worker.js</a></td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/js/worker/jsstore.worker.js" target="_blank">https://sandbox.testmaverick.com/static-resource/js/worker/jsstore.worker.js</a></td>
 </tr>
 <tr>
 <td>media-upload-worker.js</td>
-<td><a href="https://sandbox.testmaverick.com/v2023.11.1/tatic-resource/js/worker/media-upload-worker.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/tatic-resource/js/worker/media-upload-worker.js</a></td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/js/worker/MediaUploadWorkerSDK.js" target="_blank">https://sandbox.testmaverick.com/static-resource/js/worker/MediaUploadWorkerSDK.js</a></td>
 </tr>
 <tr>
 <td>signalr.js</td>
-<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/signalr.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/signalr.js</a></td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/js/scripts/SignalR.js" target="_blank">https://sandbox.testmaverick.com/static-resource/js/scripts/SignalR.js</a></td>
 </tr>
 <tr>
 <td>background-socket-service.js</td>
-<td><a href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/background-socket-service.js" target="_blank">https://sandbox.testmaverick.com/v2023.11.1/static-resource/js/scripts/background-socket-service.js</a></td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/js/scripts/BackgroundSocketService.js" target="_blank">https://sandbox.testmaverick.com/static-resource/js/scripts/BackgroundSocketService.js</a></td>
 </tr>
 </tbody>
 </table>
@@ -476,13 +499,28 @@ window.Testmaverick.AutoProctoring.init(
 <br/>
 <p>Add below scripts in your index.html</p>
 
-```html
-<link
-  rel="stylesheet"
-  href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
-/>
-<script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"></script>
-```
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSS</td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.css" target="_blank">https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.css</a></td>
+</tr>
+<tr>
+<td>JS</td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.js" target="_blank">https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.js</a></td>
+</tr>
+<tr>
+<td>CSS</td>
+<td><a href="https://sandbox.testmaverick.com/static-resource/fonts/materialdesignicons.min.css" target="_blank">https://sandbox.testmaverick.com/static-resource/fonts/materialdesignicons.min.css</a></td>
+</tr>
+</tbody>
+</table>
 
 <p>Add div elements in your DOM with below shown identifiers:</p>
 
@@ -505,7 +543,6 @@ window.Testmaverick.AutoProctoring.init(
 
 <div :class="!isVerificationSteps: '': 'display-none'">
   <TestPlayer />
-  <!-- Put Your Testplayer code or component here  -->
   <div id="auto-proctoring-container"></div>
 </div>
 ```
@@ -526,22 +563,24 @@ window.Testmaverick.AutoProctoring.init(
     <!-- Add SDK CSS BUNDLE FILE HERE -->
     <link
       rel="stylesheet"
-      href="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.css"
+      href="https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://sandbox.testmaverick.com/static-resource/fonts/materialdesignicons.min.css"
     />
     <!-- Add SDK JS BUNDLE FILE HERE -->
-    <script src="https://sandbox.testmaverick.com/v2023.11.1/static-resource/sdk/auto-proctoring/auto-proctoring-sdk.js"></script>
+    <script src="https://sandbox.testmaverick.com/static-resource/sdk/auto-proctoring/AutoProctoringSdk.js"></script>
     <title>Auto Proctoring SDK Integration Example</title>
   </head>
-
   <body>
-    <div :class="’isVerificationSteps?" “”: “display-none“’>
-      <div id="verification-steps-container"></div>
-    </div>
-    <div :class="’!isVerificationSteps?" “”: “display-none“’>
-      <TestPlayer />
-      <!-- Put Your Testplayer code or component here  -->
-      <div id="auto-proctoring-container"></div>
-    </div>
+     <div :class=’isVerificationSteps? “”: “display-none“’ >
+        <div id="verification-steps-container"></div>
+     </div>
+     <div :class=’!isVerificationSteps? “”: “display-none“’>
+     <TestPlayer />
+          <div id="auto-proctoring-container"></div>
+     </div>
   </body>
 </html>
 ```
@@ -550,88 +589,116 @@ window.Testmaverick.AutoProctoring.init(
 
 #### init(initConfig, callbacks)
 
-> The SDK will be initialized using the initConfig provided.
-> One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
-> The SDK's initialization configuration must contain an authURL.
+- The SDK will be initialized using the initConfig provided.
+- One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
+- The SDK's initialization configuration must contain an authURL.
 
-<strong>Arguments:</strong>
+> <u>Arguments:</u>
 
-<table>
-<thead>
-<tr>
-<th>input parameters</th>
-<th>type</th>
-<th>schema</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-<tr>
-<td>initConfig</td>
-<td>object</td>
-<td>
+-   initConfig : Object
 
-```
-{
-    {
-        attemptGUID: `string`,
-        userGUID: `string`,
-        testGUID: `string`,
-        type : `string`
-    },
-    `authURL ` : `string`
-}
-```
+    -   **config**: object
 
-</td>
-</tr>
-<tr>
-<td>callbacks </td>
-<td>object</td>
-<td>
+        -   **testID**: String(required)
 
-```
-{
-    readyListener: function,
-    errorListener: function,
-    getUserDetails: function,
-}
-```
+            -   **Description**: Unique identifier to identify the test.
 
-</td>
-</tr>
-</table>
+            -   **Example**: "655-11ec-9b97-0a"
 
-<strong>Callback methods:</strong>
+        -   **userID**: String (required)
 
-1. `readyListener`
+            -   **Description**: Unique identifier to identify the user.
 
-   - required: true
-   - This listener will be triggered when the SDK has been initialized and is ready for the further steps.
+            -   **Example**: "dc49115b-e655-11ec-9b97-0a264b1a6b74"
 
-2. `errorListener(error)`
+        -   **attemptID**: String (required only if type is verification-steps)
 
-   - required: true
-   - This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
-   - It will provide an error code with a descriptive message to handle the error accordingly.
+            -   **Description**: Unique identifier to identify the
+                 attempt of the test.
 
-3. `getUserDetails(List<userGUID>)`
-   - required : true if type is “verification-steps”
-   - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email
+            -   **Example**: "7557fc68-fc1a-4755-b58e-9f6055fcebe8"
 
----
+        -   **type**: String (required)
+
+            -   **Description**: Denotes the type of configuration
+
+            -   The **type** can be:
+
+                -   “system-check”
+
+                -   “verification-steps”
+
+                -   More values may be added in the future.
+
+    -  **authURL** : String
+
+        -   required: true
+
+    - **customHeaders**: Object
+        - required: false
+    - **isIframeUsed**: Boolean
+       -  required: false
+       -  if the value of this parameter is true then Auto Proctoring SDK will subscribe to the Focus events for Iframe emitted by the parent.
+-   callbacks: object
+
+    -   **readyListener()**: function
+
+        -   required: true
+
+        -   This listener will be triggered when the SDK has been
+             initialized and is ready for the further steps.
+
+    -   **errorListener(error)** : function
+
+        -   required: true
+
+        -   This listener will be triggered when there is any error
+             while initializing the SDK or at any point when the SDK is
+             running.
+
+        -   It will provide an error code with a descriptive message to
+            handle the error accordingly.
+    - **getUserDetails(List<userID>):** function
+       -  required : true if type is “verification-steps”
+        - This callback function will get called whenever there is need of personal data to render in sdk like first name, last name or email 
+       -  **input parameter** : list of userID
+            - Example:
+
+            ```js
+            [
+                “99a6bb35-b740-4021-b2b4-d712901bf91b”
+            ]
+            ```
+        - **Return value :** list of Objects
+            - Example:
+             ```js
+           [
+                {
+                    userID : “99a6bb35-b740-4021-b2b4-d712901bf91b”,
+                    firstName : “John”,
+                    lastName : “Doe”,
+                    email : “johndoe@gmail.com”
+                }
+            ]
+
+            ```
 
 #### mount()
 
 > The UI Components will be mounted using this method based on the “type” parameter provided in the config while initialization.
 
-<strong>Arguments:</strong> `None`
+-   The UI Components will be mounted using this method based on the
+    > “**type**” parameter provided in the config while initialization.
 
-<strong>Callback methods:</strong> `None`
+<u>Arguments:</u>
 
-<strong>Return value:</strong> `None`
+-   **None**
 
-<strong>Example :</strong>
+<u>Return value:</u>
+
+-   **None**
+
+<u>Example:</u>
 
 ```javascript
 window.Testmaverick.AutoProctoring.mount();
