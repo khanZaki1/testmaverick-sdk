@@ -393,7 +393,7 @@ The TestMaverick SDK provides the **init** method for initializing the SDK with 
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful. 
 - The SDK's initialization configuration must contain an authURL.
 
-<u>Arguments: </u>
+<u>Arguments:</u>
 - initConfig : Object
     - **config**: object
         - **testID**: String(required)
