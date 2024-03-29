@@ -1,7 +1,10 @@
-<p align="center"><img src="images/logo.png" width="20%" /></p>
 <h1 align="center">TestMaverick SDK Integration</h1>
 
-## Revision History
+<p align="left"><img src="images/logo.png" width="20%" /></p>
+Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013, India
+
+
+# Revision History
 
 <table>
 <thead>
@@ -106,7 +109,7 @@
 </tr>
 </table>
 
-## Table of Contents
+# Table of Contents
 
 <ol>
 <li> <a href="#table-of-contents">Table of Contents</a> </li>
@@ -172,7 +175,7 @@
 <li> <a href="#revision-history">FAQs</a> </li>
 </ol>
 
-## Introduction
+# Introduction
 
 <p>
 The TestMaverick SDK offers a cutting-edge solution for effortless integration of AI-based proctoring into your web applications. 
@@ -201,7 +204,7 @@ TestMaverick SDK provides following features:
 
 <p>This document covers Auto Proctoring and Auto Proctoring Report SDK features.</p>
 
-## Overview
+# Overview
 
 <p>
 Below is a top level architectural overview for integration of TestMaverick SDK with Consumer’s existing system. The Consumer system will integrate TestMaverick’s client SDK which will communicate with the Consumer system for data through events trigger and callbacks. Also TestMaverick SDK provides various public methods which can be accessed by consumers.
@@ -227,7 +230,7 @@ TestMaverick SDK provides a signature based authentication and authorization sys
 Following are the steps to be followed by Consumer to integrate SDK with the existing system.
 </p>
 
-## 1. Registration and Configuration
+# 1. Registration and Configuration
 
 - Consumers need to register with TestMaverick's service to obtain a ConsumerKey and a SecretKey.
 - These keys are essential for authenticating and authorizing requests made to TestMaverick's API using the SDK.
@@ -237,7 +240,7 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 - This step is a security measure to control which domains are authorized to use the SDK.
 - After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
 
-## 2. Add Signature API
+# 2. Add Signature API
 
 - Consumers must provide an API which can generate the signed object for SDK in the following output format.
   <br/>
@@ -382,13 +385,13 @@ e.g  <br/>
         }
     }
     ```
-## 3. SDK initialization
+# 3. SDK initialization
 
 The TestMaverick SDK provides the **init** method for initializing the SDK with required configuration based on consumers requirement. This  method requires two parameters as given below:
 
-## <u>Public Methods </u>
+# <u>Public Methods </u>
 
-### init( initConfig, callbacks )
+## init( initConfig, callbacks )
 - The SDK will be initialized using the initConfig provided.
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful. 
 - The SDK's initialization configuration must contain an authURL.
@@ -453,20 +456,20 @@ const initConfig  = {
 
 ---
 
-## Auto Proctoring SDK
+# Auto Proctoring SDK
 
-### Overview
+## Overview
 
 - Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam.
 - This system smartly compiles all the concrete evidence in cases of suspicious behavior, creating a solid basis for subsequent investigative procedures.
 
-### Sequence Diagram
+## Sequence Diagram
 
 <p align="center">
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
 </p>
 
-### <u> Getting Started </u>
+## <u> Getting Started </u>
 
 <p>Download the following files and add them to your public directory of your client application.</p>
 <table>
@@ -585,9 +588,9 @@ const initConfig  = {
 </html>
 ```
 
-### Public Methods
+## Public Methods
 
-#### init(initConfig, callbacks)
+### init(initConfig, callbacks)
 
 - The SDK will be initialized using the initConfig provided.
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
@@ -683,7 +686,7 @@ const initConfig  = {
 
             ```
 
-#### mount()
+### mount()
 
 -   The UI Components will be mounted using this method based on the
      “**type**” parameter provided in the config while initialization.
@@ -704,7 +707,7 @@ window.Testmaverick.AutoProctoring.mount();
 
 ---
 
-#### unmountVerificationSteps()
+### unmountVerificationSteps()
 
 - this method will unmount all the UI components related to verification steps that were mounted in the DOM.
 
@@ -724,7 +727,7 @@ window.Testmaverick.AutoProctoring.unmountVerificationSteps();
 
 ---
 
-#### unmountProctorPlayer()
+### unmountProctorPlayer()
 
 - This method will unmount all the UI components related to auto proctoring that were mounted in the DOM.
 
@@ -743,7 +746,7 @@ window.Testmaverick.AutoProctoring.unmountProctorPlayer();
 ```
 
 
-#### startAutoProctoring()
+### startAutoProctoring()
 
 -   This method will start auto proctoring services.
 
@@ -767,7 +770,7 @@ window.TestMaverick.AutoProctoring.startAutoProctoring();
 
 ---
 
-#### **stopAutoProctoring(submitTest)**
+### **stopAutoProctoring(submitTest)**
 
 -   This method will be used to stop auto proctoring.
 
@@ -792,7 +795,7 @@ window.TestMaverick.AutoProctoring.startAutoProctoring();
 // This method will stop auto proctoring
 window.TestMaverick.AutoProctoring.stopAutoProctoring(submitTest);
 ```
-#### toggleWebcamPreview()
+### toggleWebcamPreview()
 
 - This method will be used to open or close the webcam preview during the proctoring.
 
@@ -814,9 +817,9 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 
 ---
 
-### <u>Events</u>
+## <u>Events</u>
 
-#### **verificationStepsExited:**
+### **verificationStepsExited:**
 
 -   This event is activated upon the user's decision to exit the
      verification steps via the designated exit button. Upon receipt of
@@ -824,7 +827,7 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
      unmounting process of the Verification steps component by invoking
      the method **unmountVerificationSteps()**.
 
-#### **globalSystemCheckCompleted:**
+### **globalSystemCheckCompleted:**
 
 -   Upon successful completion of the global system check by the
      candidate, this event is activated. Upon receipt of this event, it
@@ -832,7 +835,7 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
      of the System check component by invoking the method
      **unmountGlobalSystemCheck().**
 
-#### **verificationStepsCompleted:**
+### **verificationStepsCompleted:**
 
 -   Upon the successful conclusion of the verification steps by the
      user, this event is triggered. Upon detection of this event, the
@@ -840,12 +843,12 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
      invoking method **unmountVerificationSteps()** and should start
      auto proctoring by invoking method **startAutoProctoring().**
 
-#### **autoProctoringStarted:**
+### **autoProctoringStarted:**
 
 -   Activation of this event signals the seamless initiation of
      auto-proctoring without encountering any errors or hindrances.
 
-#### **autoProctoringAborted:**
+### **autoProctoringAborted:**
 
 -   This event will be triggered if an interference, like a webcam
      stream being closed while proctoring, causes the auto proctoring
@@ -855,14 +858,14 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
      verification steps again by executing method
      mount("verification-steps") before resuming the test.
 
-#### **autoProctoringStopped:**
+### **autoProctoringStopped:**
 
 -   Upon the successful conclusion of the auto proctoring, this event is
      triggered. Upon detection of this event, the consumer should
      unmount the proctor player by invoking the method
      **unmountProcterPlayer()**.
 
-#### **cameraDistanceAlert :**
+### **cameraDistanceAlert :**
 
 -   This event is triggered when the user is positioned too far from the
      camera, resulting in the Auto Proctoring SDK being unable to
@@ -875,7 +878,7 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
     is displayed advising the user to move closer to the camera for proper
     detection.
 
-#### **cameraBoundaryAlert :**
+### **cameraBoundaryAlert :**
 
 -   This event is triggered when the user moves out of the camera frame,
      causing the Auto Proctoring SDK to lose detection of the user's
@@ -945,9 +948,9 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
     verification process failed or encountered an issue.
 
 
-### <u>Integration of System Check</u>
+## <u>Integration of System Check</u>
 
-#### 1. Initialize the SDK
+### 1. Initialize the SDK
 
 ```javascript
 function subscribeToEvents(){
@@ -996,7 +999,7 @@ const initConfig = {
 
 </ol>
 
-#### 2. Mount SystemCheck component
+### 2. Mount SystemCheck component
 
 In order to mount the system check UI components, there must be an element with the below mentioned identifier present in the DOM.
 
@@ -1014,9 +1017,9 @@ function readyListener() {
 }
 ```
 
-### <u>Integration of Verification Steps</u>
+## <u>Integration of Verification Steps</u>
 
-#### 1. Initialize the SDK
+### 1. Initialize the SDK
 
 ```javascript
 // Consumer can subscribe SDK events to perform any specific action
@@ -1084,7 +1087,7 @@ window.TestMaverick.AutoProctoring.init(
 })
 ```
 
-#### 2. Mount Verification Steps Component
+### 2. Mount Verification Steps Component
 
 In order to mount the system check UI components, there must be an element with the below mentioned identifier present in the DOM.
 
@@ -1111,7 +1114,7 @@ function readyListener(){
 }
 ```
 
-#### 3. Start Auto Proctoring
+### 3. Start Auto Proctoring
 
 ```javascript
 function startAutoProctoring() {
@@ -1133,7 +1136,7 @@ function subscribeToEvents(){
 
 ```
 
-#### 4. Stop Auto Proctoring
+### 4. Stop Auto Proctoring
 
 ```javascript
 function subscribeToEvents(){
@@ -1149,14 +1152,14 @@ function stopAutoProctoring() {
 };
 
 ```
-## <u>Event management for iframe window</u>
+# <u>Event management for iframe window</u>
 
    This document outlines the integration process for implementing event
  communication between an embedded iframe (consumer’s test/assessment
  player) and its parent window (consumer’s parent page) using the
  postMessage API.
 
-#### **Handling Blur Event in the Iframe:**
+### **Handling Blur Event in the Iframe:**
 
  Within the iframe, you need to add JavaScript code to handle the blur event. This event occurs when the iframe loses focus.
 
@@ -1176,7 +1179,7 @@ iframeWindow.onblur = function (e) {
 };
 ```
 
-#### **Listening to PostMessage in the Parent Window:**
+### **Listening to PostMessage in the Parent Window:**
 
  In the parent window, you need to listen for the postMessage event from the iframe.
 ```js
@@ -1199,21 +1202,21 @@ window.addEventListener("message", (e) => {
 
 ---
 
-## Auto Proctoring Report SDK
+# Auto Proctoring Report SDK
 
-### Overview
+## Overview
 
 - The AutoProctoring Report SDK is a powerful tool built to give a deep look into online test proctoring.
 - It helps proctors keep a close eye on how candidates behave during online exams, making the process more efficient.
 - This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
 
-### <u>Sequence Diagram</u>
+## <u>Sequence Diagram</u>
 
 <p align="center">
 <img src="images/report-sequence-diagram.png" width="40%" />
 </p>
 
-### <u>Getting Started</u>
+## <u>Getting Started</u>
 
 Add below scripts in your index.html
 
@@ -1279,9 +1282,9 @@ After adding these references your index.html file should look as below.
 
 ---
 
-### <u>Public Methods</u>
+## <u>Public Methods</u>
 
-#### init(initConfig, callbacks)
+### init(initConfig, callbacks)
 
 -   The SDK will be initialized using the initConfig provided.
 
@@ -1424,7 +1427,7 @@ After adding these references your index.html file should look as below.
                 ```
 ---
 
-#### mount()
+### mount()
 
 -   The Report component will be mounted using this method.
 
@@ -1441,9 +1444,9 @@ After adding these references your index.html file should look as below.
 ```javascript
 window.TestMaverick.AutoProctoringReport.mount();
 ```
-### Events
+## Events
 
-#### **candidatesMarkedAsFailed:**
+### **candidatesMarkedAsFailed:**
 
 -   This event is triggered upon the execution of the 'Mark As Failed'
      action by the User for either a single candidate or a group of
@@ -1453,9 +1456,9 @@ window.TestMaverick.AutoProctoringReport.mount();
 
 ---
 
-### Integration of Report SDK
+## Integration of Report SDK
 
-#### 1. Initialize the SDK
+### 1. Initialize the SDK
 
 ```javascript
 function subscribeToEvents(){
@@ -1526,7 +1529,7 @@ function initializeSDK(){
 
 ```
 
-#### 2. Mount ReportSDK component
+### 2. Mount ReportSDK component
 
 In order to mount the report UI components, there must be an element with the below mentioned identifier present in the DOM.
 
@@ -1546,9 +1549,9 @@ function readyListener() {
 
 ---
 
-## Proctoring Settings SDK
+# Proctoring Settings SDK
 
-### Overview
+## Overview
 
 -   The Proctoring Settings SDK provides an interface to configure Auto
      Proctoring parameters for a test.
@@ -1561,13 +1564,13 @@ function readyListener() {
      brings a bunch of useful features to enhance the proctoring
      experience.
 
-### <u>Sequence Diagram</u>
+## <u>Sequence Diagram</u>
 
 <p align="center">
 <img src="images/report-sequence-diagram.png" width="40%" />
 </p>
 
-### <u>Getting Started</u>
+## <u>Getting Started</u>
 
 Add below scripts in your index.html
 
@@ -1629,9 +1632,9 @@ After adding these references your index.html file should look as below.
 
 ---
 
-### <u>Public Methods</u>
+## <u>Public Methods</u>
 
-#### init( initConfig, callbacks)
+### init( initConfig, callbacks)
 
 -   The SDK will be initialized using the initConfig provided.
 
@@ -1681,7 +1684,7 @@ After adding these references your index.html file should look as below.
 
 ----
 
-#### **mount()**
+### **mount()**
 
 -   The Proctoring Settings component will be mounted using this method.
 
@@ -1698,9 +1701,9 @@ After adding these references your index.html file should look as below.
 window.TestMaverick.ProctoringSettingsSDK.mount();
 ```
 
-### <u>Integration of Proctoring Settings SDK</u>
+## <u>Integration of Proctoring Settings SDK</u>
 
-#### 1. Initialize the SDK
+### 1. Initialize the SDK
 
 ```javascript
     function readyListener(){
@@ -1727,7 +1730,7 @@ window.TestMaverick.ProctoringSettingsSDK.mount();
 
 ```
 
-#### 2. Mount Proctoring Settings SDK component
+### 2. Mount Proctoring Settings SDK component
 
 In order to mount the Proctoring Settings UI components, add the following container div with the below mentioned identifier in the DOM.
 
@@ -1743,11 +1746,11 @@ function readyListener() {
   window.TestMaverick.ProctoringSettingsSDK.mount();
 }
 ```
-#### 3. Essential Public Methods Of The SDK
+### 3. Essential Public Methods Of The SDK
 
  The below-mentioned public methods are only accessible when the SDK is successfully initialized and mounted.
 
--   #### **openProctoringSettingDialog(testGUID, proctoringSettings)**
+-   ### **openProctoringSettingDialog(testGUID, proctoringSettings)**
 
 ```javascript
 window.TestMaverick.ProctoringSettingsSDK.openProctorSettingDialog(
@@ -1817,7 +1820,7 @@ window.TestMaverick.ProctoringSettingsSDK.updateTestProctoringConfig(
  Popup. If the **proctoringSettings** parameter is not passed to the
  function, the test will be mapped with default settings.
 
--   #### **resetTestProctoringConfig(testGUID)**
+-   ### **resetTestProctoringConfig(testGUID)**
 ```javascript
 window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
     testGUID
@@ -1834,105 +1837,374 @@ window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
 
  --- 
 
-#### 4.  **Event Listener For API Success CallBack**
+### 4.  **Event Listener For API Success CallBack**
 
 -    To obtain the **proctoringSettings** object.
 
 <p align="center">
-<img src="images/proctoring_settings.png" width="40%" />
+<img src="images/proctoring_settings.png" width="60%" />
 </p>
+        Once the user clicks on the **"Save Settings"** button, they need to listen for an emit call that provides the **proctoringSettings**. This object consists of values for all the flags that the user has enabled
+        for the test. Later, this object can be used in the public methods
+        (**openProctoringSettingDialog , updateTestProctoringConfig**) to open
+        the proctoring settings popup according to the provided configuration
+        or map the test with the changed configuration.
 
-> Once the user clicks on the **"Save Settings"** button, they need to
-> listen for an emit call that provides the **proctoringSettings**. This
-> object consists of values for all the flags that the user has enabled
-> for the test. Later, this object can be used in the public methods
-> (**openProctoringSettingDialog , updateTestProctoringConfig**) to open
-> the proctoring settings popup according to the provided configuration
-> or map the test with the changed configuration.
->
-> For Example:
->
-> window.TestMaverick.ProctoringSettingsSDK.on(
->
-> CustomEventEnums.GET_SAVED_SETTING_OBJECT,
->
-> this.getSavedJson
->
-> );
->
-> getSavedJson: function (proctoringSettings) {
->
-> console.log(
->
-> "Saved Settings JSON Object",
->
-> proctoringSettings
->
-> );
->
-> },
+For Example:
 
--   #### **updateTestProctoringConfig()** success callback
+ ```javascript
+ window.TestMaverick.ProctoringSettingsSDK.on(
+      CustomEventEnums.GET_SAVED_SETTING_OBJECT,
+      this.getSavedJson
+    );
+ getSavedJson: function (proctoringSettings) {
+ console.log("Saved Settings JSON Object", proctoringSettings);
+ },
+ ```
 
-> After the updateTestProctoringConfig call, the user can listen for an
-> emit call that provides a status code, indicating the success or
-> failure of the API.  
-> For Example:
->
-> window.TestMaverick.ProctoringSettingsSDK.on(
->
-> CustomEventEnums.UPDATE_TEST_PROCTORING_CONFIG,
->
-> this.isclientMappingAdded
->
-> );
->
-> isclientMappingAdded: function (statusCode) {
->
-> console.log("Add client test mapping status", statusCode);
->
-> },
+ -  **updateTestProctoringConfig()** success callback
+    After the updateTestProctoringConfig call, the user can listen for an
+    emit call that provides a status code, indicating the success or
+    failure of the API.  
+    For Example:
 
+    ```javascript
+    window.TestMaverick.ProctoringSettingsSDK.on(
+        CustomEventEnums.UPDATE_TEST_PROCTORING_CONFIG,
+        this.isclientMappingAdded
+    );
+    isclientMappingAdded: function (statusCode) {
+        console.log("Add client test mapping status", statusCode);
+    },
+    ```
+ 
 -   **resetTestProctoringConfig()** success callback
 
-> After the resetTestProctoringConfig call, the user can listen for an
-> emit call that provides a status code, indicating the success or
-> failure of the API.  
-> For Example:
->
-> window.TestMaverick.ProctoringSettingsSDK.on(
->
-> CustomEventEnums.RESET_CLIENT_TEST_MAPPING,
->
-> this.resetMappingStatus
->
-> );
->
-> resetMappingStatus: function (statusCode) {
->
-> console.log("Reset client test mapping status", statusCode);
->
-> },
+    After the resetTestProctoringConfig call, the user can listen for an
+    emit call that provides a status code, indicating the success or
+    failure of the API.  
+    For Example:
+ 
+    ```javascript
+    window.TestMaverick.ProctoringSettingsSDK.on(
+      CustomEventEnums.RESET_CLIENT_TEST_MAPPING,
+      this.resetMappingStatus
+    );
+    resetMappingStatus: function (statusCode) {
+      console.log("Reset client test mapping status", statusCode);
+    },
+    ```
 
 -   **CustomEventEnums Used In this SDK**
 
-> const CustomEventEnums = {
->
-> GET_SAVED_SETTING_OBJECT: "getSavedSettingObject",
->
-> RESET_CLIENT_TEST_MAPPING: "resetClientTestMapping",
->
-> UPDATE_TEST_PROCTORING_CONFIG: "updateTestProctoringConfig",
->
-> };
->
-> Import this custom event enum where you listen for your success emit
-> call.
+    ```javascript
+    const CustomEventEnums = {
+        GET_SAVED_SETTING_OBJECT: "getSavedSettingObject",
+        RESET_CLIENT_TEST_MAPPING: "resetClientTestMapping",
+        UPDATE_TEST_PROCTORING_CONFIG: "updateTestProctoringConfig",
+    };
+    ``` 
+    Import this custom event enum where you listen for your success emit
+    call.
 
 
 ---
 
-## Error handling
+# Webhook for Violation Data
+
+## <u>Overview</u>
+
+-   A webhook is a mechanism that allows one system to send real-time
+      data or notifications to another system when specific events
+      occur.
+
+-   It enables seamless communication between different applications or
+      services by triggering actions based on events.
+
+-   Commonly employed in scenarios such as order notifications, status
+      updates, or any situation requiring immediate data
+      synchronization.
+
+## <u>Getting Started:</u>
+
+#### **API Registration for Webhook**
+
+-   To initiate the webhook integration, the Consumer is required to
+      provide the URL or web address where the data will be sent once
+      the webhook is triggered. The URL will receive an HTTP POST
+      request when the selected event happens.
+
+-   This endpoint will be registered within the Vendor application
+      during the startup project setup, serving as a one-time
+      configuration step.
+
+#### **Webhook for violation summary**
+
+-   Following the successful submission of the test, exam or assessment,
+      the TestMaverick SDK will automatically calculate the suspicion
+      level and violation associated with the submission.
+
+-   Once the suspicion level and violation is computed, the TestMaverick
+      application will dispatch a webhook notification to the provided
+      API endpoint.
+
+-   This webhook data will include the calculated suspicion level,
+      violation and an authentication signature, ensuring the integrity
+      and security of the transmitted data. Here is webhook payload data
+
+    ## Sample : 
+
+```curl
+curl -X 'POST' \
+  'https://consumers-domain/controller/action \
+  -H 'accept: */*' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'request.mode=webhook' \
+  -F 'userRequest={"userId":"xxxx","testId":"xxxx","attemptId":"xxxx","violations":{"suspicionLevel":1,"webcamDishonourCount":1,"screenDishonourCount":0,"voiceDishonourCount":7,"blockedPermissionViolationsCount":0,"webcamViolationsDuration":27,"screenViolationsDuration":0,"voiceViolationsDuration":46}}' \
+  -F 'request.meta=' \
+  -F 'request.user.lastName=' \
+  -F 'security.timestamp=123456789' \
+  -F 'request.user.userId=application' \
+  -F 'security.signature=signature' \
+  -F 'request.user.clearanceLevel=3' \
+  -F 'security.domain=https://testmaverick.zeuslearning.com/' \
+  -F 'request.user.firstName=' \
+  -F 'request.user.email=' \
+  -F 'security.remoteIpAddress=::1' \
+  -F 'security.consumerKey=Biddle-sandbox'
+```
+
+## <u>userRequest Data Fields:</u>
+
+
+```json
+{
+  "statusCode" : 0,
+  "suspicionData" : {
+    "userId": "xxxx",
+    "testId": "xxxx",
+    "attemptId": "xxxx",
+    "violations": {
+      "suspicionLevel": 1,
+      "webcamDishonourCount": 1,
+      "screenDishonourCount": 0,
+      "voiceDishonourCount": 7,
+      "blockedPermissionViolationsCount": 0,
+      "webcamViolationsDuration": 27,
+      "screenViolationsDuration": 0,
+      "voiceViolationsDuration": 46
+    }
+  }
+}
+```
+statusCode (Integer) :
+    
+This is a numerical code indicating the status of the Submission.
+    
+SUCCESS = 0
+    
+EXCEPTION = Non zero
+
+suspicionData (Object) :
+
+-   userId (string):
+
+    Identifier of the user associated with the data. This helps in
+    uniquely identifying the user within the consumer system.
+
+-   testId (String):
+
+    Identifier of the test for which submission was requested.
+
+-   attemptId (String):
+
+    Identifier of the specific test attempt.
+
+-   Violations (Object):
+
+    A nested object containing detailed violation information:
+
+    -   suspicionLevel (Integer):
+
+        Level of suspicion associated with the user's activities. It could be represented as 1 for low, 2 for medium, and 3 for high suspicion.
+
+    -   webcamDishonourCount (Integer):
+
+        Count of violations related to webcam usage. Indicates how many times the user violated webcam-related rules.
+
+    -   screenDishonourCount (Integer):
+
+        Count of violations related to screen usage. Indicates how many times the user violated screen-related rules.
+
+    -   voiceDishonourCount (Integer):
+
+        Count of violations related to voice usage. Indicates how many times the user violated voice-related rules.
+
+    -   blockedPermissionViolationsCount (Integer):
+
+        Count of violations related to blocked permissions. Indicates how many times the user violated rules due to blocked permissions.
+
+    -   webcamViolationsDuration (Integer):
+
+        Duration of webcam violations in seconds. Provides information on the total duration of webcam-related violations.
+
+    -   screenViolationsDuration (Integer):
+
+        Duration of screen violations in seconds. Provides information on the total duration of screen-related violations.
+
+    -   voiceViolationsDuration (Integer):
+
+        Duration of voice violations in seconds. Provides information on the total duration of voice-related violations.
+
+
+
+
+# Submit API
+
+## <u>Overview</u>
+
+-   This APIs allows the consumer of the proctoring platform to
+      explicitly submit a request for completing the proctoring session
+      of a candidate. Upon submission, the platform will generate the
+      candidate's report.
+
+-   This request is using the POST method to send a multipart/form-data
+      request to the specified URL. It includes various form data
+      fields.
+
+## <u>Authentication</u>
+
+-   **HMAC**: Use the TestMaverick HMAC signature for authentication.
+
+## <u>HTTP Method</u>
+
+-   **POST**: Utilize the POST method for API requests.
+
+## <u>URL</u>
+
+-   **Sandbox URL**:
+      https://sandbox.testmaverick.com/api/lms-test/lms-test-v2/create-candidate-proctor-report
+
+## <u>Headers</u>
+
+-   **accept**: */*
+
+-   **Content-Type**: multipart/form-data
+
+## <u>Form Data</u>
+
+  **userRequest**:
+  
+  {
+ 
+  "attemptID": "\<attempt-id or attempt-guid>",
+ 
+  "clientID": "\<consumerKey of consumer>"
+ 
+  }
+ 
+  **security.timestamp**: “\<timestamp>”
+ 
+  **request.user.userId**: “\<userId>”
+
+ **request.mode**: “test-submission”
+
+ **security.signature**: “\<hmac-signature-data>”
+
+ **security.remoteIpAddress**: “\<remote IP of the requesting client>”
+
+ **request.user.clearanceLevel**: 2
+
+ **security.domain**: “\<consumer’s domains>”
+
+## <u>API Response</u>
+
+    {
+
+        "statusCode": 0, // Non zero value represents the error code here.
+
+        "responseObject": {},
+
+        "exceptionDetails": null
+
+    }
+
+## <u>Sample Request</u>
+
+    curl -X 'POST' \
+
+    'https://sandbox.testmaverick.com/api/lms-test/lms-test-v2/create-candidate-proctor-report' \
+
+    -H 'accept: \*/\*' \
+
+    -H 'Content-Type: multipart/form-data' \
+
+    -F 'request.mode=test-submission' \
+
+    -F 'userRequest= {"attemptID": "67d0d1e3-b557-47a4-b6c5-1df4018e0d5a",
+    "clientID": "clientID"}' \
+
+    -F 'security.timestamp=1708433327' \
+
+    -F 'request.user.userId=28854' \
+
+    -F 'security.signature=437ce079caf4299e399d23aad16c930ed4d97ad1658a6f607fd24e7ed7ef63e' \
+
+    -F 'security.remoteIpAddress=::1' \
+
+    -F 'request.user.clearanceLevel=2' \
+
+    -F 'security.domain=staging.testgenius.com' \
+
+    -F 'security.consumerKey=Biddle-sandbox'
+
+
+## <u>Sample Code (.Net):</u> 
+
+```.net
+public async Task<bool> SubmitCandidateProctorReport(SignRequestModel inputRequestModel)
+{
+    // Create a signed request model using HMAC service
+    SignRequestModel signedRequestModel = await hMACService.CreateHMACSignature(inputRequestModel, "client-secret");
+
+    // Create a new multipart form data content
+    using MultipartFormDataContent content = new ()
+    {
+        // Add form data fields
+        { new StringContent(signedRequestModel.security.consumerKey), "security.consumerKey" },
+        { new StringContent(signedRequestModel.security.domain), "security.domain" },
+        { new StringContent(signedRequestModel.security.timestamp.ToString()), "security.timestamp" },
+        { new StringContent(signedRequestModel.security.signature), "security.signature" },
+        { new StringContent(signedRequestModel.security.remoteIpAddress), "security.remoteIpAddress" },
+        { new StringContent(signedRequestModel.request.mode), "request.mode" },
+        { new StringContent(signedRequestModel.userRequest), "userRequest" },
+        { new StringContent(signedRequestModel.request.user.userId), "request.user.userId" },
+        { new StringContent(signedRequestModel.request.user.clearanceLevel.ToString()), "request.user.clearanceLevel" },
+    };
+
+    // Create a new HttpClient instance
+    HttpClient httpClient = new HttpClient();
+    // Define the API URL
+    Uri apiURL = new Uri("https://sandbox.testmaverick.com/api/lms-test/lms-test-v2/create-candidate-proctor-report");
+    // Send a POST request to the API with the content
+    var testResponse = await httpClient.PostAsync(apiURL, content);
+
+    // Check if the request was successful
+    if (testResponse.StatusCode == StatusCodes.Status200OK)
+    {
+        // Read the response body
+        await testResponse.Content.ReadAsStringAsync();
+        return true; // Return true if the request was successful
+    }
+    else
+    {
+        // Throw an exception if the request was not successful
+        throw new HttpRequestException(testResponse?.StatusCode.ToString());
+    }
+}
+```
+
+# Error handling
 
 <ol>
 <li>Each error  will have an error code, error message, and error stack trace to help you in debugging.</li>
@@ -1969,8 +2241,8 @@ window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
     </tr>
     <tr>
         <td rowspan="8">SDK service errors</td>
-        <td>1102</td>
-        <td>service is already running</td>
+        <td>1101</td>
+        <td>service not available</td>
     </tr>
     <tr>
         <td>1102</td>
