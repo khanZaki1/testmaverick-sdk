@@ -1380,8 +1380,8 @@ After adding these references your index.html file should look as below.
 
                 ```json
                 [
-                    “99a6bb35-b740-4021-b2b4-d712901bf91b”,
-                    “804e7e24-f588-4a97-a812-f387639e5b09”
+                    "99a6bb35-b740-4021-b2b4-d712901bf91b",
+                    "804e7e24-f588-4a97-a812-f387639e5b09"
                 ]
                 ```
     -   **getUserDetails(List\<userID>):** function
