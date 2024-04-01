@@ -1,6 +1,6 @@
 <h1 align="center">TestMaverick SDK Integration</h1>
-
-<p align="left"><img src="images/logo.png" width="20%" /></p>
+[TODO : Add Image here]
+<p align="left"><img src="images/logo.png" width="20%" alt="logo" /></p>
 Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013, India
 
 
@@ -122,7 +122,8 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> <a href="#3-sdk-initialization">SDK initialization</a></li>
 <li> <a href="#public-methods">Public Methods</a>
 <ul>
-<li> <a href="#public-methods">init( initConfig, callbacks )</a>
+<li> <a href="#init( initConfig, callbacks )">init( initConfig, callbacks )</a>
+</li>
 </ul>
 </li>
 </ol>
@@ -130,23 +131,90 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> 
 <a href="#auto-proctoring-sdk">Auto Proctoring SDK</a> 
 <ol type="a">
-<li> <a href="#overview-1">Overview</a></li>
+<li> <a href="#overview">Overview</a></li>
 <li> <a href="#sequence-diagram">Sequence Diagram</a></li>
 <li> <a href="#getting-started">Getting Started</a></li>
-<li> <a href="#public-methods">seq</a></li>
-<li> <a href="#events">Events</a></li>
-<li> <a href="#integration-of-system-check">Integration of System Check</a></li>
-<li> <a href="#integration-of-verification-steps">Integration of Verification Steps</a></li>
-</ol>
+<li> 
+<a href="#public-methods">Public Methods</a>
+<ul>
+<li> <a href="#init( initConfig, callbacks )">init( initConfig, callbacks )</a> </li>
+<li> <a href="#mount()">mount()</a> </li>
+<li> <a href="#unmountVerificationSteps()">unmountVerificationSteps()</a> </li>
+<li> <a href="#unmountproctorplayer()">unmountproctorplayer()</a> </li>
+<li> <a href="#startautoproctoring()">startautoproctoring()</a> </li>
+<li> <a href="#stopautoproctoringsubmittest()">stopautoproctoringsubmittest()</a> </li>
+<li> <a href="#togglewebcampreview()">togglewebcampreview()</a> </li>
+</ul>
 </li>
+<li> <a href="#events">Events</a>
+
+-  [verificationStepsExited](#verificationstepsexited)
+
+-  [globalSystemCheckCompleted](#globalsystemcheckcompleted)
+
+-  [verificationStepsCompleted](#verificationstepscompleted)
+
+ - [autoProctoringStarted](#autoproctoringstarted)
+
+ - [autoProctoringAborted](#autoproctoringaborted)
+
+ - [autoProctoringStopped](#autoproctoringstopped)
+
+ - [cameraDistanceAlert](#cameradistancealert)
+
+ - [cameraBoundaryAlert](#cameraboundaryalert)
+</li>
+<li> <a href="#integration-of-system-check">Integration of System Check</a>
+
+- [ Initialize the SDK](#initialize-the-sdk)
+
+- [ Mount SystemCheck component](#mount-systemcheck-component)
+
+</li>
+<li> <a href="#integration-of-verification-steps">Integration of Verification Steps</a>
+
+- [ Initialize the SDK](#initialize-the-sdk-1)
+
+-  [ Mount Verification Steps Component](#mount-verification-steps-component)
+
+- [ Start Auto Proctoring ](#start-auto-proctoring)
+
+- [ Stop Auto Proctoring](#stop-auto-proctoring)
+
+</li>
+
+<li> <a href="#event-management-for-iframe-window">Event management for iframe window</a>
+
+- [Handling Blur Event in the Iframe:](#handling-blur-event-in-the-iframe)
+
+ - [Listening to PostMessage in the Parent Window:](#listening-to-postmessage-in-the-parent-window)
+</li>
+
+</ol>
+
 <li> 
 <a href="#auto-proctoring-report-sdk">Auto Proctoring Report SDK</a> 
 <ol type="a">
 <li> <a href="#overview-2">Overview</a></li>
 <li> <a href="#sequence-diagram-1">Sequence Diagram</a></li>
 <li> <a href="#getting-started-1">Getting Started</a></li>
-<li> <a href="#public-methods-1">Public Methods</a></li>
-<li> <a href="#integration-of-report-sdk">Integration of Report SDK</a></li>
+<li> <a href="#public-methods-1">Public Methods</a>
+
+- [init( initConfig, callbacks)](#init-initconfig-callbacks-2)
+-  [mount()](#mount-1)
+</li>
+
+<li> <a href="#events-1">Events</a>
+
+- [candidatesMarkedAsFailed:](#candidatesmarkedasfailed)
+</li>
+
+<li> <a href="#integration-of-report-sdk">Integration of Report SDK</a>
+
+- [ Initialize the SDK](#initialize-the-sdk-2)
+
+- [ Mount ReportSDK component](#mount-reportsdk-component)
+</li>
 </ol>
 </li>
 <li> 
@@ -155,24 +223,47 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> <a href="#overview-3">Overview</a></li>
 <li> <a href="#sequence-diagram-2">Sequence Diagram</a></li>
 <li> <a href="#getting-started-2">Getting Started</a></li>
-<li> <a href="#public-methods-2">Public Methods</a></li>
-<li> <a href="#integration-of-proctoring-settings-sdk">Integration of Proctoring Settings SDK</a></li>
+<li> <a href="#public-methods-2">Public Methods</a>
+
+- [init( initConfig, callbacks)](#init-initconfig-callbacks-2)
+-  [mount()](#mount-1)
+</li>
+<li> <a href="#integration-of-proctoring-settings-sdk">Integration of Proctoring Settings SDK</a>
+
+- [1. Initialize the SDK](#initialize-the-sdk-3)
+- [2. Mount Proctoring Settings SDK component](#mount-proctoring-settings-sdk-component)
+- [3. Essential Public Methods Of The SDK ](#essential-public-methods-of-the-sdk)
+</li>
 </ol>
 </li>
+
 <li> 
-<a href="#manual-proctoring-sdk">Manual Proctoring SDK</a> 
+<a href="#webhook-for-violation-data">Webhook for Violation Data</a> 
 <ol type="a">
 <li> <a href="#overview-4">Overview</a></li>
-<li> <a href="#sequence-diagram-3">Sequence Diagram</a></li>
-<li> <a href="#getting-started-3">Getting Started</a></li>
-<li> <a href="#public-methods-3">Public Methods</a></li>
-<li> <a href="#integration-of-manual-proctoring-sdk">Integration of Manual Proctoring SDK</a></li>
+<li> <a href="#getting-started-3">Getting Started:</a></li>
+<li> <a href="#sample">Sample :</a></li>
+<li> <a href="#userrequest-data-fields">userRequest Data Fields:</a></li>
 </ol>
 </li>
+
+<li> 
+<a href="#submit-api">Submit API</a>
+<ol type="a">
+  <li><a href="#overview-5">Overview</a></li>
+  <li><a href="#authentication">Authentication</a></li>
+  <li><a href="#http-method">HTTP Method</a></li>
+  <li><a href="#url">URL</a></li>
+  <li><a href="#headers">Headers</a></li>
+  <li><a href="#form-data">Form Data</a></li>
+  <li><a href="#api-response">API Response</a></li>
+  <li><a href="#sample-request">Sample Request</a></li>
+  <li><a href="#sample-code-.net">Sample Code (.Net)</a></li>
+</ol>
+</li>
+
 <li> <a href="#error-handling">Error Handling</a> </li>
-<li> <a href="#revision-history">FAQs</a> </li>
-<li> <a href="#error-handling">Error Handling</a> </li>
-<li> <a href="#revision-history">FAQs</a> </li>
+
 </ol>
 
 # Introduction
@@ -215,6 +306,7 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 </p>
 
 <p align="center">
+[TODO : Add Image here]
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
@@ -451,7 +543,8 @@ const initConfig  = {
 **Note :**
 - When the type field is set to "system-check", the system will only perform hardware checks, excluding regular verification steps.
 <p align="center">
-<img src="images/system_check.png" alt="Overview arch" />
+[TODO : Add Image here]
+<img src="images/system_check.png" alt="System check" />
 </p>
 
 ---
@@ -466,7 +559,8 @@ const initConfig  = {
 ## Sequence Diagram
 
 <p align="center">
-<img src="images/auto-proctoring-sequence-diagram.png" width="40%"/>
+[TODO : Add Image here]
+<img src="images/auto-proctoring-sequence-diagram.png" width="40%" alt="auto-proctoring-sequence-diagram" />
 </p>
 
 ## <u> Getting Started </u>
@@ -1213,7 +1307,8 @@ window.addEventListener("message", (e) => {
 ## <u>Sequence Diagram</u>
 
 <p align="center">
-<img src="images/report-sequence-diagram.png" width="40%" />
+[TODO : Add Image here]
+<img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
 ## <u>Getting Started</u>
@@ -1567,7 +1662,8 @@ function readyListener() {
 ## <u>Sequence Diagram</u>
 
 <p align="center">
-<img src="images/report-sequence-diagram.png" width="40%" />
+[TODO : Add Image here]
+<img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
 ## <u>Getting Started</u>
@@ -1842,7 +1938,8 @@ window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
 -    To obtain the **proctoringSettings** object.
 
 <p align="center">
-<img src="images/proctoring_settings.png" width="60%" />
+[TODO : Add Image here]
+<img src="images/proctoring_settings.png" width="60%" alt="proctoring_settings" />
 </p>
         Once the user clicks on the **"Save Settings"** button, they need to listen for an emit call that provides the **proctoringSettings**. This object consists of values for all the flags that the user has enabled
         for the test. Later, this object can be used in the public methods
