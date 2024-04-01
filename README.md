@@ -116,11 +116,16 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> <a href="#introduction">Introduction</a> </li>
 <li> <a href="#overview">Overview</a> </li>
 <li> <a href="#authentication-and-security">Authentication and Security</a> 
+
 <ol type="a">
 <li> <a href="#1-registration-and-configuration">Registration and Configuration</a></li>
+
 <li> <a href="#2-add-signature-api">Add Signature API</a></li>
+
 <li> <a href="#3-sdk-initialization">SDK initialization</a></li>
+
 <li> <a href="#public-methods">Public Methods</a>
+
 <ul>
 <li> <a href="#init( initConfig, callbacks )">init( initConfig, callbacks )</a>
 </li>
@@ -130,19 +135,30 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 </li>
 <li> 
 <a href="#auto-proctoring-sdk">Auto Proctoring SDK</a> 
+
 <ol type="a">
 <li> <a href="#overview">Overview</a></li>
+
 <li> <a href="#sequence-diagram">Sequence Diagram</a></li>
+
 <li> <a href="#getting-started">Getting Started</a></li>
+
 <li> 
 <a href="#public-methods">Public Methods</a>
+
 <ul>
 <li> <a href="#init( initConfig, callbacks )">init( initConfig, callbacks )</a> </li>
+
 <li> <a href="#mount()">mount()</a> </li>
+
 <li> <a href="#unmountVerificationSteps()">unmountVerificationSteps()</a> </li>
+
 <li> <a href="#unmountproctorplayer()">unmountproctorplayer()</a> </li>
+
 <li> <a href="#startautoproctoring()">startautoproctoring()</a> </li>
+
 <li> <a href="#stopautoproctoringsubmittest()">stopautoproctoringsubmittest()</a> </li>
+
 <li> <a href="#togglewebcampreview()">togglewebcampreview()</a> </li>
 </ul>
 </li>
@@ -195,12 +211,17 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> 
 <a href="#auto-proctoring-report-sdk">Auto Proctoring Report SDK</a> 
 <ol type="a">
+
 <li> <a href="#overview-2">Overview</a></li>
+
 <li> <a href="#sequence-diagram-1">Sequence Diagram</a></li>
+
 <li> <a href="#getting-started-1">Getting Started</a></li>
+
 <li> <a href="#public-methods-1">Public Methods</a>
 
 - [init( initConfig, callbacks)](#init-initconfig-callbacks-2)
+
 -  [mount()](#mount-1)
 </li>
 
@@ -208,6 +229,7 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 
 - [candidatesMarkedAsFailed:](#candidatesmarkedasfailed)
 </li>
+
 
 <li> <a href="#integration-of-report-sdk">Integration of Report SDK</a>
 
@@ -219,19 +241,27 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 </li>
 <li> 
 <a href="#proctoring-settings-sdk">Proctoring Settings SDK</a> 
+
 <ol type="a">
 <li> <a href="#overview-3">Overview</a></li>
+
 <li> <a href="#sequence-diagram-2">Sequence Diagram</a></li>
+
 <li> <a href="#getting-started-2">Getting Started</a></li>
+
 <li> <a href="#public-methods-2">Public Methods</a>
 
 - [init( initConfig, callbacks)](#init-initconfig-callbacks-2)
+
 -  [mount()](#mount-1)
 </li>
 <li> <a href="#integration-of-proctoring-settings-sdk">Integration of Proctoring Settings SDK</a>
 
+
 - [1. Initialize the SDK](#initialize-the-sdk-3)
+
 - [2. Mount Proctoring Settings SDK component](#mount-proctoring-settings-sdk-component)
+
 - [3. Essential Public Methods Of The SDK ](#essential-public-methods-of-the-sdk)
 </li>
 </ol>
@@ -239,10 +269,14 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 
 <li> 
 <a href="#webhook-for-violation-data">Webhook for Violation Data</a> 
+
 <ol type="a">
 <li> <a href="#overview-4">Overview</a></li>
+
 <li> <a href="#getting-started-3">Getting Started:</a></li>
+
 <li> <a href="#sample">Sample :</a></li>
+
 <li> <a href="#userrequest-data-fields">userRequest Data Fields:</a></li>
 </ol>
 </li>
@@ -250,14 +284,23 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 <li> 
 <a href="#submit-api">Submit API</a>
 <ol type="a">
+
   <li><a href="#overview-5">Overview</a></li>
+
   <li><a href="#authentication">Authentication</a></li>
+
   <li><a href="#http-method">HTTP Method</a></li>
+
   <li><a href="#url">URL</a></li>
+
   <li><a href="#headers">Headers</a></li>
+
   <li><a href="#form-data">Form Data</a></li>
+
   <li><a href="#api-response">API Response</a></li>
+
   <li><a href="#sample-request">Sample Request</a></li>
+  
   <li><a href="#sample-code-.net">Sample Code (.Net)</a></li>
 </ol>
 </li>
