@@ -1,5 +1,5 @@
 <h1 align="center">TestMaverick SDK Integration</h1>
-[TODO : Add Image here]
+
 <p align="left"><img src="images/logo.png" width="20%" alt="logo" /></p>
 Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013, India
 
@@ -224,7 +224,6 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
 
 -  [mount()](#mount-1)
 </li>
-
 <li> <a href="#events-1">Events</a>
 
 - [candidatesMarkedAsFailed:](#candidatesmarkedasfailed)
@@ -300,7 +299,7 @@ Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013,
   <li><a href="#api-response">API Response</a></li>
 
   <li><a href="#sample-request">Sample Request</a></li>
-  
+
   <li><a href="#sample-code-.net">Sample Code (.Net)</a></li>
 </ol>
 </li>
@@ -349,7 +348,7 @@ The TestMaverick SDK will store all the Proctoring related information on TestMa
 </p>
 
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/overview.png" alt="Overview arch" />
 </p>
 
@@ -365,7 +364,7 @@ TestMaverick SDK provides a signature based authentication and authorization sys
 Following are the steps to be followed by Consumer to integrate SDK with the existing system.
 </p>
 
-# 1. Registration and Configuration
+## 1. Registration and Configuration
 
 - Consumers need to register with TestMaverick's service to obtain a ConsumerKey and a SecretKey.
 - These keys are essential for authenticating and authorizing requests made to TestMaverick's API using the SDK.
@@ -375,7 +374,7 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 - This step is a security measure to control which domains are authorized to use the SDK.
 - After registration and whitelisting, consumers can integrate the TestMaverick SDK into their application.
 
-# 2. Add Signature API
+## 2. Add Signature API
 
 - Consumers must provide an API which can generate the signed object for SDK in the following output format.
   <br/>
@@ -408,9 +407,9 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
     }
     ```
 
-- To create the above signed object in .NET core application, consumers can use TestMaverick.SDK.Security.dll provided by the TestMaverick vendor.
+- To create the above signed object in .NET core application, consumers can use **TestMaverick.SDK.Security.dll** provided by the TestMaverick vendor.
 - For .Net core applications following changes can be done to create an API for signed requests.
-- Consumers should add reference of TestMaverick.SDK.Security.dll to their project.
+- Consumers should add reference of **TestMaverick.SDK.Security.dll** to their project.
   <br/>
 
     ```javascript
@@ -424,47 +423,43 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 - <p>Create a new web API in your application which will be used by Testmaverick SDK to generate a signed request. This web API endpoint URL should be provided in the config while initializing the TestMaverick SDK. The definition of the Signature API is given below for your reference.
 
   - Type : POST
-  - Request Param : [FromBody] signatureRequestModel <br/>
-            { <br/>
-                &nbsp;&nbsp;&nbsp;&nbsp; **meta** : String <br/>
-                &nbsp;&nbsp;&nbsp;&nbsp; **userRequest** : String <br/>
+  - Request Param : [FromBody] signatureRequestModel 
+            { 
+                &nbsp;&nbsp;&nbsp;&nbsp; **meta** : String 
+                &nbsp;&nbsp;&nbsp;&nbsp; **userRequest** : String
             } 
-            <br/>
-   - Response Data :  <br/>
-            { <br/>
-                &nbsp;&nbsp;&nbsp;&nbsp; **responseObject** : Object <br/>
-                &nbsp;&nbsp;&nbsp;&nbsp; **statusCode** : Integer <br/>
-                    <ul>
-                        <li> SUCCESS = 0 </li>
-                        <li> EXCEPTION = 1 </li>
-                    </ul>
+   - Response Data :  
+            { 
+                &nbsp;&nbsp;&nbsp;&nbsp; **responseObject** : Object
+                &nbsp;&nbsp;&nbsp;&nbsp; **statusCode** : Integer 
+                &nbsp;&nbsp;&nbsp;&nbsp; SUCCESS = 0 
+                &nbsp;&nbsp;&nbsp;&nbsp; EXCEPTION = 1      
             } 
-            <br/>
+           
 
 ```c#
- public class signatureRequestModel
-    {
-        public string? meta { get; set; }
-        public string? userRequest { get; set; }
-    }
-
+public class signatureRequestModel
+{
+		public string? meta { get; set; }
+    public string? userRequest { get; set; }
+}
 
 public async Task<ActionResult> GetSdkSignedRequestObject([FromBody] signatureRequestModel signatureRequestModel )
-        {
-            // Add your logic to call a service which will create a signature for a given request object.
-            // Object signedRequest = getSignedRequest(signatureRequestModel.meta,signatureRequestModel.userRequest);   // This is sample call
+{
+    // Add your logic to call a service which will create a signature for a given request object.
+    // Object signedRequest = getSignedRequest(signatureRequestModel.meta,signatureRequestModel.userRequest);   // This is sample call
             
-            // Then return API response in following data structure
-            Object responseData = new Object();
-            responseData.responseObject = signedRequest;
-            responseData.statusCode = 0;
+    // Then return API response in following data structure
+    Object responseData = new Object();
+    responseData.responseObject = signedRequest;
+    responseData.statusCode = 0;
 
-            ContentResult contentResult = new ContentResult();
-            contentResult.ContentType = "application/json";
-            contentResult.Content =  
-            JsonSerialize.Serializer(responseData);
-            return contentResult;
-        }
+    ContentResult contentResult = new ContentResult();
+    contentResult.ContentType = "application/json";
+    contentResult.Content =  
+    JsonSerialize.Serializer(responseData);
+    return contentResult;
+}
 
 ```
 
@@ -507,7 +502,7 @@ public Class YourBusinesLogicClass {
 - Consumers should make sure that the web API added in this step is not a public API to avoid any unauthorized access.
 
 **Note :** <br/>
-- The “domain” attribute in the security object should not include http/https protocols. <br/>
+- The “domain” attribute in the security object should not include http/https protocols.
 e.g  <br/>
 
     ```json
@@ -520,13 +515,12 @@ e.g  <br/>
         }
     }
     ```
-# 3. SDK initialization
-
+## 3. SDK initialization
 The TestMaverick SDK provides the **init** method for initializing the SDK with required configuration based on consumers requirement. This  method requires two parameters as given below:
 
-# <u>Public Methods </u>
+## <u>Public Methods </u> 
 
-## init( initConfig, callbacks )
+ ### init( initConfig, callbacks )
 - The SDK will be initialized using the initConfig provided.
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful. 
 - The SDK's initialization configuration must contain an authURL.
@@ -586,7 +580,7 @@ const initConfig  = {
 **Note :**
 - When the type field is set to "system-check", the system will only perform hardware checks, excluding regular verification steps.
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/system_check.png" alt="System check" />
 </p>
 
@@ -602,7 +596,7 @@ const initConfig  = {
 ## Sequence Diagram
 
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%" alt="auto-proctoring-sequence-diagram" />
 </p>
 
@@ -666,7 +660,7 @@ const initConfig  = {
 
 <ol>
 <li>
-<b>For System Check</b>
+For System Check
 
 ```html
 <div id="”system-check-steps-container”"></div>
@@ -674,7 +668,7 @@ const initConfig  = {
 
 </li>
 <li>
-<b>For Verification Steps and Auto Proctoring</b>
+  For Verification Steps and Auto Proctoring
 
 ```html
 <div :class="isVerificationSteps: '': 'display-none'">
@@ -692,7 +686,7 @@ const initConfig  = {
 
 <p>After adding these references your index.html file should look as below.</p>
 
-`index.html`
+  <u>`index.html`</u>
 
 ```html
 <!DOCTYPE html>
@@ -733,7 +727,7 @@ const initConfig  = {
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 - The SDK's initialization configuration must contain an authURL.
 
-> <u>Arguments:</u>
+ <u>Arguments:</u>
 
 -   initConfig : Object
 
@@ -887,8 +881,7 @@ window.Testmaverick.AutoProctoring.unmountProctorPlayer();
 
 -   This method will start auto proctoring services.
 
--   it will trigger the autoProctoringStarted event on successfully
-     starting the auto proctoring.
+-   it will trigger the autoProctoringStarted event on successfully starting the auto proctoring.
 
 <u>Arguments:</u>
 
@@ -911,12 +904,9 @@ window.TestMaverick.AutoProctoring.startAutoProctoring();
 
 -   This method will be used to stop auto proctoring.
 
--   Auto proctoring data will be submitted if this submitTest flag is
-     set to true or else an proctoring attempt will be saved which can
-     be further resumed.
+-   Auto proctoring data will be submitted if this submitTest flag is set to true or else an proctoring attempt will be saved which can be further resumed.
 
--   Once auto proctoring is stopped without any errors,
-     “autoProctoringStopped” event will be triggered by the SDK.
+-   Once auto proctoring is stopped without any errors, “autoProctoringStopped” event will be triggered by the SDK.
 
 <u>Arguments:</u>
 
@@ -958,131 +948,81 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 
 ### **verificationStepsExited:**
 
--   This event is activated upon the user's decision to exit the
-     verification steps via the designated exit button. Upon receipt of
-     this event, it is expected that the consumer will initiate the
-     unmounting process of the Verification steps component by invoking
-     the method **unmountVerificationSteps()**.
+-   This event is activated upon the user's decision to exit the verification steps via the designated exit button. Upon receipt of this event, it is expected that the consumer will initiate the unmounting process of the Verification steps component by invoking the method **unmountVerificationSteps()**.
 
 ### **globalSystemCheckCompleted:**
 
--   Upon successful completion of the global system check by the
-     candidate, this event is activated. Upon receipt of this event, it
-     is expected that the consumer will initiate the unmounting process
-     of the System check component by invoking the method
-     **unmountGlobalSystemCheck().**
+-   Upon successful completion of the global system check by the candidate, this event is activated. Upon receipt of this event, it is expected that the consumer will initiate the unmounting process of the System check component by invoking the method **unmountGlobalSystemCheck().**
 
 ### **verificationStepsCompleted:**
 
--   Upon the successful conclusion of the verification steps by the
-     user, this event is triggered. Upon detection of this event, the
-     consumer should unmount the Verification steps component by
-     invoking method **unmountVerificationSteps()** and should start
-     auto proctoring by invoking method **startAutoProctoring().**
+-   Upon the successful conclusion of the verification steps by the user, this event is triggered. Upon detection of this event, the consumer should unmount the Verification steps component by invoking method **unmountVerificationSteps()** and should start auto proctoring by invoking method **startAutoProctoring().**
 
 ### **autoProctoringStarted:**
 
--   Activation of this event signals the seamless initiation of
-     auto-proctoring without encountering any errors or hindrances.
+-   Activation of this event signals the seamless initiation of auto-proctoring without encountering any errors or hindrances.
 
 ### **autoProctoringAborted:**
 
--   This event will be triggered if an interference, like a webcam
-     stream being closed while proctoring, causes the auto proctoring
-     to stop working.
+-   This event will be triggered if an interference, like a webcam stream being closed while proctoring, causes the auto proctoring to stop working.
 
--   If the user wants to resume proctoring, they must complete the
-     verification steps again by executing method
-     mount("verification-steps") before resuming the test.
+-   If the user wants to resume proctoring, they must complete the verification steps again by executing method mount("verification-steps") before resuming the test.
 
 ### **autoProctoringStopped:**
 
--   Upon the successful conclusion of the auto proctoring, this event is
-     triggered. Upon detection of this event, the consumer should
-     unmount the proctor player by invoking the method
-     **unmountProcterPlayer()**.
+-   Upon the successful conclusion of the auto proctoring, this event is triggered. Upon detection of this event, the consumer should unmount the proctor player by invoking the method **unmountProcterPlayer()**.
 
 ### **cameraDistanceAlert :**
 
--   This event is triggered when the user is positioned too far from the
-     camera, resulting in the Auto Proctoring SDK being unable to
-     detect the user's face. Consumers can utilize this event to alert
-     users accordingly.
+-   This event is triggered when the user is positioned too far from the camera, resulting in the Auto Proctoring SDK being unable to detect the user's face. Consumers can utilize this event to alert users accordingly.
 
     **Example:**
 
-    Upon trigger of the Camera Distance Alert, a notification or snackbar
-    is displayed advising the user to move closer to the camera for proper
-    detection.
+    Upon trigger of the Camera Distance Alert, a notification or snackbar is displayed advising the user to move closer to the camera for proper detection.
 
 ### **cameraBoundaryAlert :**
 
--   This event is triggered when the user moves out of the camera frame,
-     causing the Auto Proctoring SDK to lose detection of the user's
-     face. Consumers have the option to utilize this event to alert
-     users as necessary.
+-   This event is triggered when the user moves out of the camera frame, causing the Auto Proctoring SDK to lose detection of the user's face. Consumers have the option to utilize this event to alert users as necessary.
 
     **Example:**
 
-    When the Camera Boundary Alert is triggered, users receive a
-    notification or snackbar advising the user to remain within the camera
-    frame for effective monitoring.
+    When the Camera Boundary Alert is triggered, users receive a notification or snackbar advising the user to remain within the camera frame for effective monitoring.
 
 **systemCheck:start :**
 
--   This event indicates the beginning of a system check process, where
-     various aspects of the system are examined for functionality and
-     integrity.
+-   This event indicates the beginning of a system check process, where various aspects of the system are examined for functionality and integrity.
 
 **systemCheck:complete :**
 
--   This event signifies the completion of the system check process,
-    indicating that all components have been successfully examined
-     without encountering any issues.
+-   This event signifies the completion of the system check process, indicating that all components have been successfully examined without encountering any issues.
 
 **systemCheck:error :**
 
--   This event occurs if an error is encountered during the system check
-     process, indicating that one or more components failed to pass the
-     check or encountered an issue.
+-   This event occurs if an error is encountered during the system check process, indicating that one or more components failed to pass the check or encountered an issue.
 
 **faceScan:start :**
 
--   This event marks the commencement of a face scanning procedure,
-     typically used for biometric identification or authentication
-     purposes.
+-   This event marks the commencement of a face scanning procedure, typically used for biometric identification or authentication purposes.
 
 **faceScan:complete :**
 
--   This event denotes the successful completion of the face scanning
-     procedure, indicating that the user's facial features have been
-     successfully captured and processed.
+-   This event denotes the successful completion of the face scanning procedure, indicating that the user's facial features have been successfully captured and processed.
 
 **faceScan:error :**
 
--   This event occurs if an error is encountered during the face
-    scanning procedure, indicating that the facial recognition system
-     failed to capture or process the user's facial features correctly.
+-   This event occurs if an error is encountered during the face scanning procedure, indicating that the facial recognition system failed to capture or process the user's facial features correctly.
 
 **identityVerification:start :**
 
--   This event signals the initiation of an identity verification
-     process, where the user's identity is authenticated or verified
-     through various means, such as biometric data or personal
-     information.
+-   This event signals the initiation of an identity verification process, where the user's identity is authenticated or verified through various means, such as biometric data or personal information.
 
 **identityVerification:complete :**
 
--   This event signifies the successful completion of the identity
-     verification process. It indicates that the user's identity has
-     been authenticated or verified according to the predetermined
-     criteria or standards.
+-   This event signifies the successful completion of the identity verification process. It indicates that the user's identity has been authenticated or verified according to the predetermined criteria or standards.
 
 **identityVerification:error :**
 
--   This event occurs if an error is encountered during the identity
-     verification process, indicating that the authentication or
-    verification process failed or encountered an issue.
+-   This event occurs if an error is encountered during the identity verification process, indicating that the authentication or verification process failed or encountered an issue.
 
 
 ## <u>Integration of System Check</u>
@@ -1289,12 +1229,9 @@ function stopAutoProctoring() {
 };
 
 ```
-# <u>Event management for iframe window</u>
+## <u>Event management for iframe window</u>
 
-   This document outlines the integration process for implementing event
- communication between an embedded iframe (consumer’s test/assessment
- player) and its parent window (consumer’s parent page) using the
- postMessage API.
+   This document outlines the integration process for implementing event communication between an embedded iframe (consumer’s test/assessment player) and its parent window (consumer’s parent page) using the postMessage API.
 
 ### **Handling Blur Event in the Iframe:**
 
@@ -1350,7 +1287,7 @@ window.addEventListener("message", (e) => {
 ## <u>Sequence Diagram</u>
 
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
@@ -1426,8 +1363,7 @@ After adding these references your index.html file should look as below.
 
 -   The SDK will be initialized using the initConfig provided.
 
--   One of the available callbacks will be triggered depending on
-     whether initialization was successful or unsuccessful.
+-   One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 
 -   The SDK's initialization configuration must contain an authURL.
 
@@ -1476,8 +1412,7 @@ After adding these references your index.html file should look as below.
 
         -   **return value** : none
 
-        -   This listener will be triggered when the SDK has been
-             initialized and is ready for the further steps.
+        -   This listener will be triggered when the SDK has been initialized and is ready for the further steps.
 
     -   **errorListener(error)**: function
 
@@ -1487,19 +1422,15 @@ After adding these references your index.html file should look as below.
 
         -   **return valu**e : none
 
-        -   This listener will be triggered when there is any error
-             while initializing the SDK or at any point when the SDK is
-             running.
+        -   This listener will be triggered when there is any error while initializing the SDK or at any point when the SDK is running.
 
-        -   It will provide an error code with a descriptive message to
-             handle the error accordingly.
+        -   It will provide an error code with a descriptive message to handle the error accordingly.
 
     -   **getFilteredUsers(filter):** function
 
         -   **Required :** true
 
-        -   This call back function will get called whenever there is a
-             need to search or sort candidates by name.
+        -   This call back function will get called whenever there is a need to search or sort candidates by name.
 
         -   **parameter** : filter object
 
@@ -1529,9 +1460,7 @@ After adding these references your index.html file should look as below.
 
         -   **Required :** true
 
-        -   This call back function will get called whenever there is need
-         of personal data to render in sdk like first name, last name
-         or email
+        -   This call back function will get called whenever there is need of personal data to render in sdk like first name, last name or email
 
         -   **parameter** : list of UserID
 
@@ -1586,11 +1515,7 @@ window.TestMaverick.AutoProctoringReport.mount();
 
 ### **candidatesMarkedAsFailed:**
 
--   This event is triggered upon the execution of the 'Mark As Failed'
-     action by the User for either a single candidate or a group of
-     candidates. Upon listening to this event, the consumer will
-     receive a list of attemptIDs corresponding to those candidates for
-     whom the 'Mark As Failed' action has been performed.
+-   This event is triggered upon the execution of the 'Mark As Failed' action by the User for either a single candidate or a group of candidates. Upon listening to this event, the consumer will receive a list of attemptIDs corresponding to those candidates for whom the 'Mark As Failed' action has been performed.
 
 ---
 
@@ -1691,21 +1616,16 @@ function readyListener() {
 
 ## Overview
 
--   The Proctoring Settings SDK provides an interface to configure Auto
-     Proctoring parameters for a test.
+-   The Proctoring Settings SDK provides an interface to configure Auto Proctoring parameters for a test.
 
--   It allows users to set preference for their test on how they want
-     their test to be proctored and what all types of violations to
-     capture.
+-   It allows users to set preference for their test on how they want their test to be proctored and what all types of violations to capture.
 
--   This SDK easily fits into existing online testing platforms and
-     brings a bunch of useful features to enhance the proctoring
-     experience.
+-   This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
 
 ## <u>Sequence Diagram</u>
 
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
@@ -1777,8 +1697,7 @@ After adding these references your index.html file should look as below.
 
 -   The SDK will be initialized using the initConfig provided.
 
--   One of the available callbacks will be triggered depending on
-     whether initialization was successful or unsuccessful.
+-   One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 
 -   The SDK's initialization configuration must contain an authURL.
 
@@ -1900,22 +1819,15 @@ window.TestMaverick.ProctoringSettingsSDK.openProctorSettingDialog(
 
  To open the proctoring settings popup, the user needs to invoke the afore mentioned function.
 
- In this context, both **testGUID** and **proctoringSettings** are
- optional parameters.
+ In this context, both **testGUID** and **proctoringSettings** are optional parameters.
 
- If the user supplies the **testGUID** to the function, it will verify
- whether the provided **testGUID** is mapped in the testMaverick
- Database and will display the last recorded proctoring settings.
+ If the user supplies the **testGUID** to the function, it will verify whether the provided **testGUID** is mapped in the testMaverick Database and will display the last recorded proctoring settings.
 
- If the user provides the proctoring settings to the function, the
- settings UI will be displayed accordingly.
+ If the user provides the proctoring settings to the function, the settings UI will be displayed accordingly.
 
- If the user provides both parameters to the function, preference will
- be given to **proctoringSettings**.
+ If the user provides both parameters to the function, preference will be given to **proctoringSettings**.
 
- Additionally, it's important to note that if the provided **testGUID**
- is not mapped on our server, the settings popup will always appear in
- its default state.
+ Additionally, it's important to note that if the provided **testGUID** is not mapped on our server, the settings popup will always appear in its default state.
 
 -   **updateTestProctoringConfig(testGUID, testStartDateTime,testEndDateTime,proctoringMode,proctoringSettings)**
 ```javascript
@@ -1929,35 +1841,22 @@ window.TestMaverick.ProctoringSettingsSDK.updateTestProctoringConfig(
 ```
 
 
- To map a proctored test and update its settings configuration, the
- user must invoke the above-mentioned method. The required parameters
- for this operation include **testGUID**, **testStartDateTime**,
- **testEndDateTime**, and **proctoringMode**. Additionally,
- **proctoringSettings** is an optional parameter.
+ To map a proctored test and update its settings configuration, the user must invoke the above-mentioned method. The required parameters for this operation include **testGUID**, **testStartDateTime**, **testEndDateTime**, and **proctoringMode**. Additionally, **proctoringSettings** is an optional parameter.
 
- The **testGUID** is a string serving as a unique identifier. Both
- **testStartDateTime** and **testEndDateTime** specify the start and
- end of the test, and it's important to note that the date-time format
- for both should be provided in the **\`toUTCString()’** format.
+ The **testGUID** is a string serving as a unique identifier. Both **testStartDateTime** and **testEndDateTime** specify the start and end of the test, and it's important to note that the date-time format for both should be provided in the **\`toUTCString()’** format.
 
  For Example:
-
+  
     testStartDateTime: "Tue, 15 Dec 2023 08:30:00 GMT",
-
     testEndDateTime: "Wed, 16 Dec 2023 08:30:00 GMT",
+ 
 
- The **proctoringMode** is an Enum value that specifies whether the
- test is Auto-Proctored or Manually-Proctored. An example Enum
- definition is provided:
+ The **proctoringMode** is an Enum value that specifies whether the test is Auto-Proctored or Manually-Proctored. An example Enum definition is provided:
 
     let proctoringModeType = { AUTO_PROCTORING: 0, MANUAL_PROCTORING: 1 };
-
     proctoringMode = proctoringModeType.AUTO_PROCTORING;
 
- The **proctoringSettings** parameter is optional and represents an
- object containing all the flags displayed in the Proctor Settings
- Popup. If the **proctoringSettings** parameter is not passed to the
- function, the test will be mapped with default settings.
+ The **proctoringSettings** parameter is optional and represents an object containing all the flags displayed in the Proctor Settings Popup. If the **proctoringSettings** parameter is not passed to the function, the test will be mapped with default settings.
 
 -   ### **resetTestProctoringConfig(testGUID)**
 ```javascript
@@ -1966,11 +1865,9 @@ window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
 );
 ```
 
- To remove a test from proctoring, the user needs to invoke the
- above-mentioned method.
+ To remove a test from proctoring, the user needs to invoke the above-mentioned method.
 
- It's important to note that the user cannot reset a test once it has
- started.
+ It's important to note that the user cannot reset a test once it has started.
 
  The only required parameter for the function is **testGUID**.
 
@@ -1981,14 +1878,11 @@ window.TestMaverick.ProctoringSettingsSDK.resetTestProctoringConfig(
 -    To obtain the **proctoringSettings** object.
 
 <p align="center">
-[TODO : Add Image here]
+
 <img src="images/proctoring_settings.png" width="60%" alt="proctoring_settings" />
 </p>
-        Once the user clicks on the **"Save Settings"** button, they need to listen for an emit call that provides the **proctoringSettings**. This object consists of values for all the flags that the user has enabled
-        for the test. Later, this object can be used in the public methods
-        (**openProctoringSettingDialog , updateTestProctoringConfig**) to open
-        the proctoring settings popup according to the provided configuration
-        or map the test with the changed configuration.
+  
+Once the user clicks on the **Save Settings** button, they need to listen for an emit call that provides the **proctoringSettings**. This object consists of values for all the flags that the user has enabled for the test. Later, this object can be used in the public methods (**openProctoringSettingDialog , updateTestProctoringConfig**) to open the proctoring settings popup according to the provided configuration or map the test with the changed configuration.
 
 For Example:
 
@@ -2003,9 +1897,7 @@ For Example:
  ```
 
  -  **updateTestProctoringConfig()** success callback
-    After the updateTestProctoringConfig call, the user can listen for an
-    emit call that provides a status code, indicating the success or
-    failure of the API.  
+    After the updateTestProctoringConfig call, the user can listen for an emit call that provides a status code, indicating the success or failure of the API.  
     For Example:
 
     ```javascript
@@ -2020,9 +1912,7 @@ For Example:
  
 -   **resetTestProctoringConfig()** success callback
 
-    After the resetTestProctoringConfig call, the user can listen for an
-    emit call that provides a status code, indicating the success or
-    failure of the API.  
+    After the resetTestProctoringConfig call, the user can listen for an emit call that provides a status code, indicating the success or failure of the API.  
     For Example:
  
     ```javascript
@@ -2044,53 +1934,34 @@ For Example:
         UPDATE_TEST_PROCTORING_CONFIG: "updateTestProctoringConfig",
     };
     ``` 
-    Import this custom event enum where you listen for your success emit
-    call.
+    Import this custom event enum where you listen for your success emit call.
 
-
----
 
 # Webhook for Violation Data
 
 ## <u>Overview</u>
+ 
+-   A webhook is a mechanism that allows one system to send real-time data or notifications to another system when specific events occur.
 
--   A webhook is a mechanism that allows one system to send real-time
-      data or notifications to another system when specific events
-      occur.
+-   It enables seamless communication between different applications or services by triggering actions based on events.
 
--   It enables seamless communication between different applications or
-      services by triggering actions based on events.
-
--   Commonly employed in scenarios such as order notifications, status
-      updates, or any situation requiring immediate data
-      synchronization.
+-   Commonly employed in scenarios such as order notifications, status updates, or any situation requiring immediate data synchronization.
 
 ## <u>Getting Started:</u>
 
 #### **API Registration for Webhook**
 
--   To initiate the webhook integration, the Consumer is required to
-      provide the URL or web address where the data will be sent once
-      the webhook is triggered. The URL will receive an HTTP POST
-      request when the selected event happens.
+-   To initiate the webhook integration, the Consumer is required to provide the URL or web address where the data will be sent once the webhook is triggered. The URL will receive an HTTP POST request when the selected event happens.
 
--   This endpoint will be registered within the Vendor application
-      during the startup project setup, serving as a one-time
-      configuration step.
+-   This endpoint will be registered within the Vendor application during the startup project setup, serving as a one-time configuration step.
 
 #### **Webhook for violation summary**
 
--   Following the successful submission of the test, exam or assessment,
-      the TestMaverick SDK will automatically calculate the suspicion
-      level and violation associated with the submission.
+-   Following the successful submission of the test, exam or assessment, the TestMaverick SDK will automatically calculate the suspicion level and violation associated with the submission.
 
--   Once the suspicion level and violation is computed, the TestMaverick
-      application will dispatch a webhook notification to the provided
-      API endpoint.
+-   Once the suspicion level and violation is computed, the TestMaverick application will dispatch a webhook notification to the provided API endpoint.
 
--   This webhook data will include the calculated suspicion level,
-      violation and an authentication signature, ensuring the integrity
-      and security of the transmitted data. Here is webhook payload data
+-   This webhook data will include the calculated suspicion level, violation and an authentication signature, ensuring the integrity and security of the transmitted data. Here is webhook payload data.
 
     ## Sample : 
 
