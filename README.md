@@ -1,3 +1,9 @@
+<h1 align="center">TestMaverick SDK Integration</h1>
+
+<p align="left"><img src="images/logo.png" width="20%" alt="logo" /></p>
+Zeus learning | B-1402, Peninsula Business Park, Lower Parel (W), Mumbai 400013, India
+
+
 # Revision History
 
 <table>
@@ -15,6 +21,91 @@
 <td>v2023.11.1</td>
 <td>Zeus</td>
 <td>SDK Overview and Integration steps</td>
+</tr>
+<tr>
+<td>28<sup>th</sup> Nov, 2023</td>
+<td>v2023.11.28</td>
+<td>Zeus</td>
+<td>Change the path for client scripts</td>
+</tr>
+<tr class="odd">
+<td>29<sup>th</sup> Nov, 2023</td>
+<td>v2023.11.29</td>
+<td>Zeus</td>
+<td>Update details related to response object of Auth API</td>
+</tr>
+<tr class="header">
+<td>4<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.04</td>
+<td>Zeus</td>
+<td>Add notes</td>
+</tr>
+<tr class="odd">
+<td>5<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.05</td>
+<td>Zeus</td>
+<td>Fix typo errors in code snippet</td>
+</tr>
+<tr class="header">
+<td>11<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.11</td>
+<td>Zeus</td>
+<td>Add documentation for Proctoring Settings</td>
+</tr>
+<tr class="odd">
+<td>14<sup>th</sup> Dec, 2023</td>
+<td>v2023.12.14</td>
+<td>Zeus</td>
+<td>Update Report SDK config</td>
+</tr>
+<tr class="header">
+<td>5<sup>th</sup> Jan, 2024</td>
+<td>v2024.01.05</td>
+<td>Zeus</td>
+<td>Add documentation for Proctoring Setting SDK</td>
+</tr>
+<tr class="odd">
+<td>16<sup>th</sup> Jan,2024</td>
+<td>v2024.01.16</td>
+<td>Zeus</td>
+<td>Add documentation for webhook and auth api changes</td>
+</tr>
+<tr class="header">
+<td>19<sup>th</sup> Jan,2024</td>
+<td>v2024.01.19</td>
+<td>Zeus</td>
+<td><p>Add customHeaders field in SDK initialization</p>
+<p>and rename userGUID field</p></td>
+</tr>
+<tr class="odd">
+<td>1st Feb, 2024</td>
+<td>v2024.02.01</td>
+<td>Zeus</td>
+<td>Add “listOfIFrames” field in Auto Proctoring SDK initialization.</td>
+</tr>
+<tr class="header">
+<td>7<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.02</td>
+<td>Zeus</td>
+<td>Update flag for Iframe and Event management for iframe window in Auto Proctoring SDK.</td>
+</tr>
+<tr class="odd">
+<td>20<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.20</td>
+<td>Zeus</td>
+<td>Add documentation for Submit API.</td>
+</tr>
+<tr class="header">
+<td>28<sup>th</sup> Feb, 2024</td>
+<td>v2024.02.28</td>
+<td>Zeus</td>
+<td>Add Event for Mark as Failed action</td>
+</tr>
+<tr class="odd">
+<td>20<sup>th</sup> Mar, 2024</td>
+<td>v2024.03.20</td>
+<td>Zeus</td>
+<td>Add event for camera alerts</td>
 </tr>
 </table>
 
@@ -349,7 +440,7 @@ Following are the steps to be followed by Consumer to integrate SDK with the exi
 ```c#
 public class signatureRequestModel
 {
-	public string? meta { get; set; }
+		public string? meta { get; set; }
     public string? userRequest { get; set; }
 }
 
@@ -427,15 +518,14 @@ e.g  <br/>
 ## 3. SDK initialization
 The TestMaverick SDK provides the **init** method for initializing the SDK with required configuration based on consumers requirement. This  method requires two parameters as given below:
 
-## Public Methods
-<br/> 
-  
+## <u>Public Methods </u> 
+
  ### init( initConfig, callbacks )
 - The SDK will be initialized using the initConfig provided.
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful. 
 - The SDK's initialization configuration must contain an authURL.
 
-Arguments:
+<u>Arguments:</u>
 - initConfig : Object
     - **config**: object
         - **testID**: String(required)
@@ -497,8 +587,7 @@ const initConfig  = {
 ---
 
 # Auto Proctoring SDK
-  <br/>
-  
+
 ## Overview
 
 - Auto Proctoring SDK ensures the utmost exam security by meticulously scrutinizing audio-video and screen-sharing data to mimic the vigilance of a human proctor, proactively identifying and flagging any potential violations during the exam.
@@ -511,8 +600,7 @@ const initConfig  = {
 <img src="images/auto-proctoring-sequence-diagram.png" width="40%" alt="auto-proctoring-sequence-diagram" />
 </p>
 
-##  Getting Started 
-<br/>
+## <u> Getting Started </u>
 
 <p>Download the following files and add them to your public directory of your client application.</p>
 <table>
@@ -632,7 +720,6 @@ For System Check
 ```
 
 ## Public Methods
-<br/>
 
 ### init(initConfig, callbacks)
 
@@ -640,7 +727,7 @@ For System Check
 - One of the available callbacks will be triggered depending on whether initialization was successful or unsuccessful.
 - The SDK's initialization configuration must contain an authURL.
 
- Arguments:
+ <u>Arguments:</u>
 
 -   initConfig : Object
 
@@ -857,8 +944,7 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 
 ---
 
-## Events
-<br/>
+## <u>Events</u>
 
 ### **verificationStepsExited:**
 
@@ -939,8 +1025,7 @@ window.TestMaverick.AutoProctoring.toggleWebcamPreview();
 -   This event occurs if an error is encountered during the identity verification process, indicating that the authentication or verification process failed or encountered an issue.
 
 
-## Integration of System Check
-<br/>
+## <u>Integration of System Check</u>
 
 ### 1. Initialize the SDK
 
@@ -1009,8 +1094,7 @@ function readyListener() {
 }
 ```
 
-## Integration of Verification Steps
-<br/>
+## <u>Integration of Verification Steps</u>
 
 ### 1. Initialize the SDK
 
@@ -1145,9 +1229,7 @@ function stopAutoProctoring() {
 };
 
 ```
-  <br/>
-  
-## Event management for iframe window
+## <u>Event management for iframe window</u>
 
    This document outlines the integration process for implementing event communication between an embedded iframe (consumer’s test/assessment player) and its parent window (consumer’s parent page) using the postMessage API.
 
@@ -1195,7 +1277,6 @@ window.addEventListener("message", (e) => {
 ---
 
 # Auto Proctoring Report SDK
-<br/>
 
 ## Overview
 
@@ -1203,16 +1284,14 @@ window.addEventListener("message", (e) => {
 - It helps proctors keep a close eye on how candidates behave during online exams, making the process more efficient.
 - This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
 
-## Sequence Diagram
-<br/>
+## <u>Sequence Diagram</u>
 
 <p align="center">
 
 <img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
-## Getting Started
-<br/>
+## <u>Getting Started</u>
 
 Add below scripts in your index.html
 
@@ -1278,8 +1357,7 @@ After adding these references your index.html file should look as below.
 
 ---
 
-## Public Methods
-<br/>
+## <u>Public Methods</u>
 
 ### init(initConfig, callbacks)
 
@@ -1289,7 +1367,7 @@ After adding these references your index.html file should look as below.
 
 -   The SDK's initialization configuration must contain an authURL.
 
-Arguments:
+<u>Arguments:</u>
 
 -   initConfig : object
 
@@ -1434,7 +1512,6 @@ Arguments:
 window.TestMaverick.AutoProctoringReport.mount();
 ```
 ## Events
-<br/>
 
 ### **candidatesMarkedAsFailed:**
 
@@ -1443,7 +1520,6 @@ window.TestMaverick.AutoProctoringReport.mount();
 ---
 
 ## Integration of Report SDK
-<br/>
 
 ### 1. Initialize the SDK
 
@@ -1537,7 +1613,6 @@ function readyListener() {
 ---
 
 # Proctoring Settings SDK
-<br/>
 
 ## Overview
 
@@ -1547,16 +1622,14 @@ function readyListener() {
 
 -   This SDK easily fits into existing online testing platforms and brings a bunch of useful features to enhance the proctoring experience.
 
-## Sequence Diagram
-<br/>
+## <u>Sequence Diagram</u>
 
 <p align="center">
 
 <img src="images/report-sequence-diagram.png" width="40%" alt="report-sequence-diagram" />
 </p>
 
-## Getting Started
-<br/>
+## <u>Getting Started</u>
 
 Add below scripts in your index.html
 
@@ -1618,8 +1691,7 @@ After adding these references your index.html file should look as below.
 
 ---
 
-## Public Methods
-<br/>
+## <u>Public Methods</u>
 
 ### init( initConfig, callbacks)
 
@@ -1629,7 +1701,7 @@ After adding these references your index.html file should look as below.
 
 -   The SDK's initialization configuration must contain an authURL.
 
-Arguments:
+<u>Arguments:</u>
 
 -   initConfig : object
 
@@ -1687,8 +1759,7 @@ Arguments:
 window.TestMaverick.ProctoringSettingsSDK.mount();
 ```
 
-## Integration of Proctoring Settings SDK
-<br/>
+## <u>Integration of Proctoring Settings SDK</u>
 
 ### 1. Initialize the SDK
 
@@ -1867,9 +1938,8 @@ For Example:
 
 
 # Webhook for Violation Data
-<br/>
 
-## Overview
+## <u>Overview</u>
  
 -   A webhook is a mechanism that allows one system to send real-time data or notifications to another system when specific events occur.
 
@@ -1877,8 +1947,7 @@ For Example:
 
 -   Commonly employed in scenarios such as order notifications, status updates, or any situation requiring immediate data synchronization.
 
-## Getting Started:
-<br/>
+## <u>Getting Started:</u>
 
 #### **API Registration for Webhook**
 
@@ -1895,7 +1964,6 @@ For Example:
 -   This webhook data will include the calculated suspicion level, violation and an authentication signature, ensuring the integrity and security of the transmitted data. Here is webhook payload data.
 
     ## Sample : 
-<br/>
 
 ```curl
 curl -X 'POST' \
@@ -1916,10 +1984,8 @@ curl -X 'POST' \
   -F 'security.remoteIpAddress=::1' \
   -F 'security.consumerKey=Biddle-sandbox'
 ```
-<br/>
 
-## userRequest Data Fields:
-<br/>
+## <u>userRequest Data Fields:</u>
 
 
 ```json
@@ -2005,9 +2071,8 @@ suspicionData (Object) :
 
 
 # Submit API
-<br/>
 
-## Overview
+## <u>Overview</u>
 
 -   This APIs allows the consumer of the proctoring platform to
       explicitly submit a request for completing the proctoring session
@@ -2018,27 +2083,26 @@ suspicionData (Object) :
       request to the specified URL. It includes various form data
       fields.
 
-## Authentication
+## <u>Authentication</u>
 
 -   **HMAC**: Use the TestMaverick HMAC signature for authentication.
 
-## HTTP Method
+## <u>HTTP Method</u>
 
 -   **POST**: Utilize the POST method for API requests.
 
-## URL
+## <u>URL</u>
 
 -   **Sandbox URL**:
       https://sandbox.testmaverick.com/api/lms-test/lms-test-v2/create-candidate-proctor-report
 
-## Headers
+## <u>Headers</u>
 
 -   **accept**: */*
 
 -   **Content-Type**: multipart/form-data
 
-## Form Data
-<br/>
+## <u>Form Data</u>
 
   **userRequest**:
   
@@ -2064,7 +2128,7 @@ suspicionData (Object) :
 
  **security.domain**: “\<consumer’s domains>”
 
-## API Response
+## <u>API Response</u>
   
 <br/>
     {
@@ -2077,7 +2141,7 @@ suspicionData (Object) :
 
     }
 
-## Sample Request
+## <u>Sample Request</u>
   <br/>
 
     curl -X 'POST' \
@@ -2106,11 +2170,9 @@ suspicionData (Object) :
     -F 'security.domain=staging.testgenius.com' \
 
     -F 'security.consumerKey=Biddle-sandbox'
-<br/>
 
 
-## Sample Code (.Net):
-<br/>
+## <u>Sample Code (.Net):</u> 
 
 ```.net
 public async Task<bool> SubmitCandidateProctorReport(SignRequestModel inputRequestModel)
@@ -2156,7 +2218,6 @@ public async Task<bool> SubmitCandidateProctorReport(SignRequestModel inputReque
 ```
 
 # Error handling
-<br/>
 
 <ol>
 <li>Each error  will have an error code, error message, and error stack trace to help you in debugging.</li>
